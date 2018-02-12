@@ -5,7 +5,8 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      userLoggedIn: false
+      userLoggedIn: false,
+      userID: undefined
     }
   }
 
@@ -101,9 +102,21 @@ class Login extends Component {
 class Alibay extends Component {
   constructor() {
     super();
-    this.state = { pageToDisplayInViewer: "allListings" }
+    this.state = { pageToDisplayInViewer: "allListings", listings: [] }
+  }
+  setAllListings = () => {
+    fetch('/allListings?uid=' + this.userID)
+    .then(x => x.json())
+    .then(x => console.log(x))
+    .then(x => 
+      this.setState({pageToDisplayInViewer: 'allListings', listings: x})
+    )
   }
   setPageToDisplayInViewer = pageName => {
+    switch(pageName) {
+      case 'allListings':
+      return this.setAllListings();
+    }
     this.setState(st => { return { pageToDisplayInViewer: pageName }});
   }
   render = () => {
@@ -169,7 +182,7 @@ class Sidebar extends Component {
 class Searchbar extends Component {
   constructor(props) {
     super(props);
-    this.state = { }
+    this.state = {}
   }
   performSearch = () => {
     if (this.searchBar.value === "") {
@@ -189,8 +202,9 @@ class Searchbar extends Component {
 class Viewer extends Component {
   constructor(props) {
     super(props);
-    this.state = { pageToDisplay: this.props.pageToDisplay }
+    this.state = {listings: []}
   }
+  
   getPageToDisplay = () => {
     const nameOfPageToDisplay = this.props.pageToDisplay 
     if (nameOfPageToDisplay === "allListings") {
@@ -254,31 +268,31 @@ class ItemCard extends Component {
   }
 }
 
-class ItemsPurchased extends Component {
-  constructor() {
-    super();
-    this.state = {}
-  }
-  render = () => {
-    return (
-      <div>
-      </div>
-    );
-  }
-}
+// class ItemsPurchased extends Component {
+//   constructor() {
+//     super();
+//     this.state = {}
+//   }
+//   render = () => {
+//     return (
+//       <div>
+//       </div>
+//     );
+//   }
+// }
 
-class ItemsSold extends Component {
-  constructor() {
-    super();
-    this.state = {}
-  }
-  render = () => {
-    return (
-      <div>
-      </div>
-    );
-  }
-}
+// class ItemsSold extends Component {
+//   constructor() {
+//     super();
+//     this.state = {}
+//   }
+//   render = () => {
+//     return (
+//       <div>
+//       </div>
+//     );
+//   }
+// }
 
 class AddListing extends Component {
   constructor() {
