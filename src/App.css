@@ -1,0 +1,176 @@
+body {
+  margin: 8px;
+  color: #AAA;
+  background-color: #222;
+}
+
+input, button, textarea {
+  margin: 4px;
+  padding: 4px;
+}
+
+input, textarea {
+  background-color: #000;
+  border: #111 3px solid;
+  border-radius: 4px;
+  color: #FD6;
+}
+
+textarea {
+  font-family: sans-serif;
+  resize: none;
+}
+
+button {
+  background-color: #555;
+  border-radius: 4px;
+  color: #FD6;
+  font-weight: bold;
+}
+
+img {
+  border-radius: 4px;
+}
+
+.App {
+  text-align: center;
+  min-width: 350px;
+}
+
+.FlexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.FlexTopLeft {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.FlexCenterLeft {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.BlockTopLeft {
+  display: block;
+  text-align: left;
+}
+
+.FullWidth {
+  width: 100%;
+}
+
+.ErrorHeader {
+  background-color: #300;
+  color: #F66;
+}
+
+.ErrorMessage {
+  color: #F99;
+}
+
+.ValidationHeader {
+  background-color: #025;
+  color: #08C;
+}
+
+.Sidebar {
+  background-color: #333;
+  border-radius: 5px;
+  padding: 10px;
+  min-width: 110px;
+  max-width: 170px;
+  margin: 4px 4px 0px 0px;
+  padding-right: 18px;
+}
+
+.SidebarHeader {
+  color: #DDD;
+  font-weight: bold;
+}
+
+.SidebarSplitter {
+  background-color: #444;
+  border-radius: 1px;
+  height: 5px;
+  width: 5px;
+  margin: 8px 4px;
+}
+
+.Searchbar {
+  width: 100%;
+}
+
+.Display {
+  background-color: #161616;
+  border-radius: 5px;
+  min-height: 100%;
+  height: 100%;
+  min-width: 200px;
+  max-width: 500px;
+  margin: 4px;
+}
+
+.CardBody {
+  padding: 8px;
+}
+
+.CardImage {
+  max-width: 175px;
+}
+
+.CardPrice {
+  background-color: #222;
+  border-radius: 4px;
+  color: #FD6;
+  font-weight: bold;
+}
+
+.CardButton {
+  background-color: #FD6;
+  color: #333;
+  border-radius: 4px;
+}
+
+.CardDescription {
+  padding: 8px;
+}
+
+.ModalBackground {
+
+}
+
+.ModalWindow {
+  
+}
+
+.ModalTitleBar {
+  background-color: #FD6;
+  color: #333;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.ModalBody {
+
+}
+
+.NameField {
+  width: 254px;
+}
+
+.PriceField {
+  width: 75px;
+}
+
+.DisabledButton {
+  background-color: #555;
+  border-radius: 4px;
+  color: #888;
+  font-weight: bold;  
+}
