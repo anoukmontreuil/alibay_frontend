@@ -15,7 +15,7 @@ class App extends Component {
        while we have no back-end to work from. 
        (The app currently accepts any valid credentials 
        from a front-end perspective only.)*/
-    this.setState(st => { return { userLoggedIn: true }})
+    this.setState(st => { return { userLoggedIn: true } })
     return inputValidationWasSuccessful;
   }
 
@@ -23,7 +23,7 @@ class App extends Component {
     if (this.state.userLoggedIn) {
       return (<Alibay />)
     } else {
-      return (<Login inputValidated={this.wasInputValidated}/>)
+      return (<Login inputValidated={this.wasInputValidated} />)
     }
   }
   render = () => {
@@ -54,11 +54,11 @@ class Login extends Component {
     this.notificationArea.innerHTML = ``
 
     // Assigning evaluation results to variables...
-    let usernameLengthAdequate = (this.usernameField.value.length >= MIN_USERNAME_LENGTH 
-                               && this.usernameField.value.length <= MAX_USERNAME_LENGTH);
-    let passwordLengthAdequate = (this.passwordField.value.length >= MIN_PASSWORD_LENGTH 
-                               && this.passwordField.value.length <= MAX_PASSWORD_LENGTH);
-    
+    let usernameLengthAdequate = (this.usernameField.value.length >= MIN_USERNAME_LENGTH
+      && this.usernameField.value.length <= MAX_USERNAME_LENGTH);
+    let passwordLengthAdequate = (this.passwordField.value.length >= MIN_PASSWORD_LENGTH
+      && this.passwordField.value.length <= MAX_PASSWORD_LENGTH);
+
     // Input evaluation process...                           
     let inputIsValid = true;
 
@@ -90,8 +90,8 @@ class Login extends Component {
     return (
       <div>
         <h2>Log In</h2>
-        <input ref={unf => this.usernameField = unf} placeholder="Username" type="text"/>
-        <input ref={pwf => this.passwordField = pwf} placeholder="Password" type="password"/>
+        <input ref={unf => this.usernameField = unf} placeholder="Username" type="text" />
+        <input ref={pwf => this.passwordField = pwf} placeholder="Password" type="password" />
         <button onClick={this.validateInputs}>Log In</button>
         <div ref={ntf => this.notificationArea = ntf}></div>
       </div>
@@ -106,29 +106,29 @@ class Alibay extends Component {
   }
   setAllListings = () => {
     fetch('/allListings?uid=m' /*+ this.userID*/)
-    .then(x => x.json())
-    .then(x => console.log(x))
-    .then(x => 
-      this.setState({pageToDisplayInViewer: 'allListings', listings: x})
-    )
+      .then(x => x.json())
+      .then(x => console.log(x))
+      .then(x =>
+        this.setState({ pageToDisplayInViewer: 'allListings', listings: x })
+      )
   }
 
   setItemsBoughtListing = () => {
     fetch('/allItemsBought?uid=m' /*+ this.userID*/)
-    .then(x => x.json())
-    .then(x => console.log(x))
-    .then(x => 
-      this.setState({pageToDisplayInViewer: 'itemsBought', listings: x})
-    )
+      .then(x => x.json())
+      .then(x => console.log(x))
+      .then(x =>
+        this.setState({ pageToDisplayInViewer: 'itemsBought', listings: x })
+      )
   }
 
   setItemsSoldListing = () => {
     fetch('/allItemsSold?uid=m' /*+ this.userID*/)
-    .then(x => x.json())
-    .then(x => console.log(x))
-    .then(x => 
-      this.setState({pageToDisplayInViewer: 'itemsSold', listings: x})
-    )
+      .then(x => x.json())
+      .then(x => console.log(x))
+      .then(x =>
+        this.setState({ pageToDisplayInViewer: 'itemsSold', listings: x })
+      )
   }
 
   createListing = () => {
@@ -140,29 +140,33 @@ class Alibay extends Component {
         blurb: this.blurb
       }
     })
-    .then(x => x.json())
-    .then(x => console.log(x))
-    .then(x => 
-    this.setState({listings: x}))
+      .then(x => x.json())
+      .then(x => console.log(x))
+      .then(x =>
+        this.setState({ listings: x }))
   }
 
   getItemDecsription = () => {
     fetch('/getItemDescription')
-    .then(x => x.json())
-    .then(x => console.log(x))
+      .then(x => x.json())
+      .then(x => console.log(x))
   }
 
 
+
   setPageToDisplayInViewer = pageName => {
-    switch(pageName) {
+    switch (pageName) {
       case 'allListings':
-      return this.setAllListings();
+        return this.setAllListings();
       case 'itemsBought':
-      return this.setItemsBoughtListing();
+        return this.setItemsBoughtListing();
       case 'itemsSold':
-      return this.setItemsSoldListing();
+        return this.setItemsSoldListing();
+      case 'itemSold' && (this.sellerID !== undefined):
+        return this.getItemDecsription();
+      // default: this.setAllListings();
     }
-    this.setState(st => { return { pageToDisplayInViewer: pageName }});
+    this.setState(st => { return { pageToDisplayInViewer: pageName } });
   }
 
 
@@ -171,11 +175,11 @@ class Alibay extends Component {
     return (
       <div className="FlexCenter">
         <div>
-          <Sidebar pageToDisplayInViewer={this.setPageToDisplayInViewer}/>
+          <Sidebar pageToDisplayInViewer={this.setPageToDisplayInViewer} />
         </div>
         <div>
-          <Searchbar ref={sb => this.searchField = sb} pageToDisplayInViewer={this.setPageToDisplayInViewer}/>
-          <Viewer ref={pdm => this.pageViewer = pdm} pageToDisplay={this.state.pageToDisplayInViewer}/>
+          <Searchbar ref={sb => this.searchField = sb} pageToDisplayInViewer={this.setPageToDisplayInViewer} />
+          <Viewer ref={pdm => this.pageViewer = pdm} pageToDisplay={this.state.pageToDisplayInViewer} />
         </div>
       </div>
     );
@@ -227,7 +231,7 @@ class Sidebar extends Component {
           <div className="SidebarSplitter"></div>
         </div>
         <div>
-        <div className="SidebarHeader">Seller Mode</div>
+          <div className="SidebarHeader">Seller Mode</div>
           <button onClick={this.displayAddListingPage} className="FullWidth">Put Item Up For&nbsp;Sale</button>
           <button onClick={this.displayItemsSoldPage} className="FullWidth">View Items Sold</button>
         </div>
@@ -244,18 +248,18 @@ class Searchbar extends Component {
 
   performSearch = () => {
     fetch('/searchForListings')
-    .then(x => x.json())
-    .then(x => console.log(x))
+      .then(x => x.json())
+      .then(x => console.log(x))
 
     if (this.searchBar.value === "") {
       this.props.pageToDisplayInViewer(this.pageName);
-    } else {}
+    } else { }
   }
 
   render = () => {
     return (
       <div className="FlexCenter">
-        <input ref={sb => this.searchBar = sb} className="Searchbar" placeholder="Find items for sale"/>
+        <input ref={sb => this.searchBar = sb} className="Searchbar" placeholder="Find items for sale" />
         <button onClick={this.performSearch}>Search</button>
       </div>
     );
@@ -265,22 +269,25 @@ class Searchbar extends Component {
 class Viewer extends Component {
   constructor(props) {
     super(props);
-    this.state = {listings: []}
+    this.state = { listings: [] }
   }
-  
+
   getPageToDisplay = () => {
-    const nameOfPageToDisplay = this.props.pageToDisplay 
+    const nameOfPageToDisplay = this.props.pageToDisplay
     if (nameOfPageToDisplay === "allListings") {
       return (
         <div>
-          <ItemCard listingID="listing1ID"/>
-          <ItemCard listingID="listing2ID"/>
-          <ItemCard listingID="listing3ID"/>
+          <ItemCard listingID="listing1ID" />
+          <ItemCard listingID="listing2ID" />
+          <ItemCard listingID="listing3ID" />
         </div>
       )
     }
     if (nameOfPageToDisplay === "addListing") {
       return <AddListing />
+    }
+    if (nameOfPageToDisplay === "itemsBought") {
+      return < />
     }
   }
   render = () => {
@@ -295,9 +302,10 @@ class Viewer extends Component {
 class ItemCard extends Component {
   constructor() {
     super();
-    this.state = { 
-      itemHasBeenPurchased: false, 
-      buyerID: null }
+    this.state = {
+      itemHasBeenPurchased: false,
+      buyerID: null
+    }
   }
   purchaseItem = () => {
     fetch('/buy', {
@@ -308,10 +316,10 @@ class ItemCard extends Component {
         listingID: this.listingID
       }
     })
-    .then(x => x.json())
-    .then(x => console.log(x))
+      .then(x => x.json())
+      .then(x => console.log(x))
 
-    this.setState(st => { return { itemHasBeenPurchased: true }});
+    this.setState(st => { return { itemHasBeenPurchased: true } });
   }
 
   render = () => {
@@ -319,19 +327,19 @@ class ItemCard extends Component {
       <div className="FlexTopLeft">
         <div className="CardBody">
           <div className="CardPrice">
-            { this.props.listingID === "listing1ID" 
+            {this.props.listingID === "listing1ID"
               ? <img className="CardImage" src="Boat.jpg" />
               : this.props.listingID === "listing2ID"
-                ? <img className="CardImage" src="Gloves.jpg" /> : <img className="CardImage" src="Running-Shoes.jpg" /> }
+                ? <img className="CardImage" src="Gloves.jpg" /> : <img className="CardImage" src="Running-Shoes.jpg" />}
             <div className="FlexCenterLeft">
-              
-              { this.state.itemHasBeenPurchased ? null : <button className="CardButton" onClick={this.purchaseItem}>Buy</button>}
-              { this.state.itemHasBeenPurchased ? "Purchased For: " : "" } 
-              
-              { this.props.listingID === "listing1ID" 
-              ? "50000$"
-              : this.props.listingID === "listing2ID"
-                ? "1000$" : "100$" }
+
+              {this.state.itemHasBeenPurchased ? null : <button className="CardButton" onClick={this.purchaseItem}>Buy</button>}
+              {this.state.itemHasBeenPurchased ? "Purchased For: " : ""}
+
+              {this.props.listingID === "listing1ID"
+                ? "50000$"
+                : this.props.listingID === "listing2ID"
+                  ? "1000$" : "100$"}
             </div>
           </div>
         </div>
@@ -372,23 +380,23 @@ class ItemCard extends Component {
 class AddListing extends Component {
   constructor() {
     super();
-    this.state = { 
+    this.state = {
       postingValidated: false,
       pictureSelected: false
-     }
+    }
   }
   selectImageFile = () => {
     const imgPath = this.imageSelector.value;
     if (
-      imgPath.length > 4 
+      imgPath.length > 4
       && (
-           imgPath.substring(imgPath.length - 3, imgPath.length).toUpperCase() === "JPG"
+        imgPath.substring(imgPath.length - 3, imgPath.length).toUpperCase() === "JPG"
         || imgPath.substring(imgPath.length - 3, imgPath.length).toUpperCase() === "GIF"
         || imgPath.substring(imgPath.length - 3, imgPath.length).toUpperCase() === "PNG"
       )
     ) {
-    this.setState(st => { return { pictureSelected: true }});
-    this.itemTitle.value = imgPath.substring(12, imgPath.length - 4);
+      this.setState(st => { return { pictureSelected: true } });
+      this.itemTitle.value = imgPath.substring(12, imgPath.length - 4);
     }
   }
   validatePosting = () => {
@@ -396,14 +404,14 @@ class AddListing extends Component {
     if (this.itemPrice.value.length > 0) {
       priceToNumber = parseInt(this.itemPrice.value, 10);
     }
-    if ( this.itemTitle.value.length > 0
+    if (this.itemTitle.value.length > 0
       && this.itemPrice.value.length > 0
       && priceToNumber > -1
-      && this.itemBlurb.value.length > 0 
+      && this.itemBlurb.value.length > 0
     ) {
-      this.setState(st => { return { postingValidated: true }});
+      this.setState(st => { return { postingValidated: true } });
     } else {
-      this.setState(st => { return { postingValidated: false }});
+      this.setState(st => { return { postingValidated: false } });
     }
   }
   render = () => {
@@ -413,17 +421,17 @@ class AddListing extends Component {
           <div className="ModalTitleBar">Add A Listing</div>
           <div className="ModalBody">
             <div className="BlockTopLeft">
-              <input ref={imgsel => this.imageSelector = imgsel} type="file" onChange={this.selectImageFile}/>
+              <input ref={imgsel => this.imageSelector = imgsel} type="file" onChange={this.selectImageFile} />
             </div>
             <div className="BlockTopLeft">
-              <input ref={it => this.itemTitle = it} onChange={this.validatePosting} placeholder="Name of item" maxLength="140" className="NameField"/>
-              <input ref={ip => this.itemPrice = ip} onChange={this.validatePosting} placeholder="Price" maxLength="10" className="PriceField"/>
+              <input ref={it => this.itemTitle = it} onChange={this.validatePosting} placeholder="Name of item" maxLength="140" className="NameField" />
+              <input ref={ip => this.itemPrice = ip} onChange={this.validatePosting} placeholder="Price" maxLength="10" className="PriceField" />
             </div>
             <div className="BlockTopLeft">
-              <textarea ref={ib => this.itemBlurb = ib} onChange={this.validatePosting} placeholder="Item description" rows="5" cols="51" maxLength="4096"/>
+              <textarea ref={ib => this.itemBlurb = ib} onChange={this.validatePosting} placeholder="Item description" rows="5" cols="51" maxLength="4096" />
             </div>
             <div>
-              { this.state.postingValidated ? <button>Add Listing</button> : <button className="DisabledButton" disabled>Add Listing</button> }
+              {this.state.postingValidated ? <button>Add Listing</button> : <button className="DisabledButton" disabled>Add Listing</button>}
             </div>
           </div>
         </div>
