@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { logIn } from './requests';
+
+const sha1 = require('sha1');
 
 class Login extends Component {
   constructor(props) {
@@ -45,7 +48,8 @@ class Login extends Component {
       this.notificationArea.innerHTML += `
       <h3 class="ValidationHeader">
         ...Validating Credentials, Please Wait...
-      </h3>`
+      </h3>`;
+      logIn(this.usernameField.value, sha1(this.passwordField));
     }
   }
   render = () => {
