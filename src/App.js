@@ -105,20 +105,47 @@ class Alibay extends Component {
     this.state = { pageToDisplayInViewer: "allListings", listings: [] }
   }
   setAllListings = () => {
-    fetch('/allListings?uid=' + this.userID)
+    fetch('/allListings?uid=m' /*+ this.userID*/)
     .then(x => x.json())
     .then(x => console.log(x))
     .then(x => 
       this.setState({pageToDisplayInViewer: 'allListings', listings: x})
     )
   }
+
+  setItemsBoughtListing = () => {
+    fetch('/allItemsBought?uid=m' /*+ this.userID*/)
+    .then(x => x.json())
+    .then(x => console.log(x))
+    .then(x => 
+      this.setState({pageToDisplayInViewer: 'itemsBought', listings: x})
+    )
+  }
+
+  setItemsSoldListing = () => {
+    fetch('/allItemsSold?uid=m' /*+ this.userID*/)
+    .then(x => x.json())
+    .then(x => console.log(x))
+    .then(x => 
+      this.setState({pageToDisplayInViewer: 'itemsSold', listings: x})
+    )
+  }
+
+
   setPageToDisplayInViewer = pageName => {
     switch(pageName) {
       case 'allListings':
       return this.setAllListings();
+      case 'itemsBought':
+      return this.setItemsBoughtListing();
+      case 'itemsSold':
+      return this.setItemsSoldListing();
     }
     this.setState(st => { return { pageToDisplayInViewer: pageName }});
   }
+
+
+
   render = () => {
     return (
       <div className="FlexCenter">
@@ -144,6 +171,15 @@ class Sidebar extends Component {
   displayAllListingsPage = () => {
     this.props.pageToDisplayInViewer("allListings");
   }
+
+  displayItemsBoughtPage = () => {
+    this.props.pageToDisplayInViewer("itemsBought");
+  }
+
+  displayItemsSoldPage = () => {
+    this.props.pageToDisplayInViewer("itemsSold");
+  }
+
   render = () => {
     return (
       <div className="Sidebar">
@@ -160,7 +196,7 @@ class Sidebar extends Component {
         </div>
         <div>
           <div className="SidebarHeader">Buyer Mode</div>
-          <button className="FullWidth">View Items Purchased</button>
+          <button onClick={this.displayItemsBoughtPage} className="FullWidth">View Items Purchased</button>
         </div>
         <div className="FlexCenter">
           <div className="SidebarSplitter"></div>
@@ -172,7 +208,7 @@ class Sidebar extends Component {
         <div>
         <div className="SidebarHeader">Seller Mode</div>
           <button onClick={this.displayAddListingPage} className="FullWidth">Put Item Up For&nbsp;Sale</button>
-          <button className="FullWidth">View Items Sold</button>
+          <button onClick={this.displayItemsSoldPage} className="FullWidth">View Items Sold</button>
         </div>
       </div>
     );
@@ -345,7 +381,7 @@ class AddListing extends Component {
               <input ref={ip => this.itemPrice = ip} onChange={this.validatePosting} placeholder="Price" maxLength="10" className="PriceField"/>
             </div>
             <div className="BlockTopLeft">
-              <textarea ref={ib => this.itemBlurb = ib} onChange={this.validatePosting} placeholder="Item description" rows="5" cols="51" maxlength="4096"/>
+              <textarea ref={ib => this.itemBlurb = ib} onChange={this.validatePosting} placeholder="Item description" rows="5" cols="51" maxLength="4096"/>
             </div>
             <div>
               { this.state.postingValidated ? <button>Add Listing</button> : <button className="DisabledButton" disabled>Add Listing</button> }
