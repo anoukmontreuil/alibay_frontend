@@ -37,6 +37,11 @@ img {
   min-width: 350px;
 }
 
+.Icon {
+  width: 320px;
+  height: 120px;
+}
+
 .FlexCenter {
   display: flex;
   justify-content: center;
