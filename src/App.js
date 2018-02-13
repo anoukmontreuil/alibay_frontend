@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import { getAllListings } from './requests';
 
 class App extends Component {
   constructor() {
@@ -12,11 +13,11 @@ class App extends Component {
   }
 
   showSignUp = () => {
-    this.setState(st => { return { userRegistered: false }});
+    this.setState(st => { return { userRegistered: false } });
   }
 
   showLogIn = () => {
-    this.setState(st => { return { userRegistered: true }});
+    this.setState(st => { return { userRegistered: true } });
   }
 
   wasInputValidated = (inputValidationWasSuccessful) => {
@@ -31,30 +32,8 @@ class App extends Component {
   getPageToDisplay = () => {
     if (this.state.userLoggedIn) {
       return (<Alibay />)
-<<<<<<< HEAD
     } else {
       return (<Login inputValidated={this.wasInputValidated} />)
-=======
-    }
-    if (this.state.userRegistered) { // Show login page...
-      return (
-        <div>
-          <Login inputValidated={this.wasInputValidated}/>
-          <p>
-            Not registered? <button onClick={this.showSignUp}>Sign up</button>
-          </p>
-        </div>
-      )
-    } else { // Show sign-up page...
-      return (
-        <div>
-          <SignUp />
-          <p>
-            Already registered? <button onClick={this.showLogIn}>Log In</button>
-          </p>
-        </div>
-      );
->>>>>>> ff0be712a90628a037af55cd1cbd7133bc6f82d6
     }
   }
   render = () => {
@@ -78,9 +57,9 @@ class SignUp extends Component {
     return (
       <div>
         <h2>Sign Up</h2>
-        <input ref={suunf => this.signUpUsernameField = suunf} placeholder="Username" type="text"/>
-        <input ref={supwf => this.signUpPasswordField = supwf} placeholder="Password" type="password"/>
-        <input ref={supwcf => this.signUpPasswordConfirmationField = supwcf} placeholder="Confirm Password" type="password"/>
+        <input ref={suunf => this.signUpUsernameField = suunf} placeholder="Username" type="text" />
+        <input ref={supwf => this.signUpPasswordField = supwf} placeholder="Password" type="password" />
+        <input ref={supwcf => this.signUpPasswordConfirmationField = supwcf} placeholder="Confirm Password" type="password" />
         <button onClick={this.validateInputs}>Sign Up</button>
         <div ref={suntf => this.signUpNotificationArea = suntf}></div>
       </div>
@@ -155,9 +134,8 @@ class Alibay extends Component {
     this.state = { pageToDisplayInViewer: "allListings", listings: [] }
   }
   setAllListings = () => {
-    fetch('/allListings?uid=m' /*+ this.userID*/)
-      .then(x => x.json())
-      .then(x => console.log(x))
+    getAllListings()
+      .then(x => { console.log(x); return x })
       .then(x =>
         this.setState({ pageToDisplayInViewer: 'allListings', listings: x })
       )
@@ -319,7 +297,12 @@ class Searchbar extends Component {
 class Viewer extends Component {
   constructor(props) {
     super(props);
-    this.state = { listings: [] }
+  }
+
+  getItemDecsription = () => {
+    fetch('/getItemDescription')
+      .then(x => x.json())
+      .then(x => console.log(x))
   }
 
   getPageToDisplay = () => {
@@ -327,9 +310,9 @@ class Viewer extends Component {
     if (nameOfPageToDisplay === "allListings") {
       return (
         <div>
-          <ItemCard listingID="listing1ID" />
-          <ItemCard listingID="listing2ID" />
-          <ItemCard listingID="listing3ID" />
+          <ItemCard price={this.props.price} listingID={this.listingID} />
+          <ItemCard listingID={this.listingID} />
+          <ItemCard listingID={this.listingID} />
         </div>
       )
     }
@@ -337,7 +320,13 @@ class Viewer extends Component {
       return <AddListing />
     }
     if (nameOfPageToDisplay === "itemsBought") {
-      return < />
+      return (
+        <div>
+          <ItemCard listingID="listing1ID" />
+          <ItemCard listingID="listing2ID" />
+          <ItemCard listingID="listing3ID" />
+        </div>
+      )
     }
   }
   render = () => {
@@ -371,6 +360,8 @@ class ItemCard extends Component {
 
     this.setState(st => { return { itemHasBeenPurchased: true } });
   }
+
+ 
 
   render = () => {
     return (
