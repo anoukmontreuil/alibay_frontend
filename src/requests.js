@@ -1,5 +1,5 @@
-export function getAllListings(userID) {
-    return fetch('/allListings?uid=m' /*+ userID*/)
+export function getAllListings() {
+    return fetch('/allListings')
     .then(x => x.json());
 };
 

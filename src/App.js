@@ -42,21 +42,21 @@ class App extends Component {
     }
     if (this.state.userRegistered) {
       return (
-      <div>
-        <Login inputValidated={this.wasInputValidated} />
-        <p>Not Registered? <button onClick={this.showSignUp}>Sign Up</button></p>
-      </div>
+        <div>
+          <Login inputValidated={this.wasInputValidated} />
+          <p>Not Registered? <button onClick={this.showSignUp}>Sign Up</button></p>
+        </div>
       )
     } else {
       return (
-      <div>
-        <SignUp inputValidated={this.wasInputValidated} />
-        <p>Already Registered <button onClick={this.showLogIn}>Log In</button></p>
-      </div>
+        <div>
+          <SignUp inputValidated={this.wasInputValidated} />
+          <p>Already Registered <button onClick={this.showLogIn}>Log In</button></p>
+        </div>
       )
     }
   }
-  
+
   render = () => {
     return (
       <div className="App">
@@ -75,26 +75,40 @@ class Alibay extends Component {
     this.state = { pageToDisplayInViewer: "allListings", listings: [] }
   }
   setAllListings = () => {
-    getAllListings()
+    getAllListings(this.props.userID)
       // .then(x => { console.log(x); return x })
-      .then(x =>
-        this.setState({ pageToDisplayInViewer: 'allListings', listings: x }));
+      .then(x => {
+        console.log(x)
+        var tempListing = []
+        for (var i = 0; i < x.temsContent.length; i++) {
+          console.log('test1')
+          tempListing.push({
+            price: x.temsContent[i].price,
+            seller: x.temsContent[i].seller,
+            blurb: x.temsContent[i].blurb,
+            buyer: false,
+            listingID: x.tempItems[i]
+          })
+        }
+        console.log(tempListing)
+        this.setState({ pageToDisplayInViewer: 'allListings', listings: tempListing })
+      });
   }
 
   setItemsBoughtListing = () => {
-    getItemsBoughtListings()
+    getItemsBoughtListings(this.props.userID)
       .then(x =>
         this.setState({ pageToDisplayInViewer: 'itemsBought', listings: x }));
   }
 
   setItemsSoldListing = () => {
-    getItemsSoldListing()
+    getItemsSoldListing(this.props.userID)
       .then(x =>
         this.setState({ pageToDisplayInViewer: 'itemsSold', listings: x }));
   }
 
   createListing = () => {
-    getCreateListings()
+    getCreateListings(this.props.userID)
       .then(x =>
         this.setState({ listings: x }));
   }
@@ -102,7 +116,6 @@ class Alibay extends Component {
   getItemDecsription = () => {
     fetch('/getItemDescription')
       .then(x => x.json())
-      .then(x => console.log(x))
   }
 
 
@@ -125,6 +138,7 @@ class Alibay extends Component {
 
 
   render = () => {
+    console.log(this.state)
     return (
       <div className="FlexCenter">
         <div>
@@ -132,7 +146,7 @@ class Alibay extends Component {
         </div>
         <div>
           <Searchbar ref={sb => this.searchField = sb} pageToDisplayInViewer={this.setPageToDisplayInViewer} />
-          <Viewer ref={pdm => this.pageViewer = pdm} pageToDisplay={this.state.pageToDisplayInViewer} />
+          <Viewer ref={pdm => this.pageViewer = pdm} pageToDisplay={this.state.pageToDisplayInViewer} allListings={this.state.listings} />
         </div>
       </div>
     );

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {getPurchaseItem} from './requests';
 
 class AddListing extends Component {
   constructor() {
@@ -37,6 +38,14 @@ class AddListing extends Component {
       this.setState(st => { return { postingValidated: false } });
     }
   }
+
+    
+  purchaseItem = () => {
+    getPurchaseItem()
+      .then(x => console.log(x));
+    this.setState(st => { return { itemHasBeenPurchased: true } });
+  }
+
   render = () => {
     return (
       <div className="ModalBackground">
