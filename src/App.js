@@ -131,6 +131,27 @@ class Alibay extends Component {
     )
   }
 
+  createListing = () => {
+    fetch('/createListing', {
+      method: "POST",
+      body: {
+        sellerID: this.userID,
+        price: this.price,
+        blurb: this.blurb
+      }
+    })
+    .then(x => x.json())
+    .then(x => console.log(x))
+    .then(x => 
+    this.setState({listings: x}))
+  }
+
+  getItemDecsription = () => {
+    fetch('/getItemDescription')
+    .then(x => x.json())
+    .then(x => console.log(x))
+  }
+
 
   setPageToDisplayInViewer = pageName => {
     switch(pageName) {
@@ -220,11 +241,17 @@ class Searchbar extends Component {
     super(props);
     this.state = {}
   }
+
   performSearch = () => {
+    fetch('/searchForListings')
+    .then(x => x.json())
+    .then(x => console.log(x))
+
     if (this.searchBar.value === "") {
-      this.props.pageToDisplayInViewer("allListings");
+      this.props.pageToDisplayInViewer(this.pageName);
     } else {}
   }
+
   render = () => {
     return (
       <div className="FlexCenter">
@@ -273,8 +300,20 @@ class ItemCard extends Component {
       buyerID: null }
   }
   purchaseItem = () => {
+    fetch('/buy', {
+      method: "POST",
+      body: {
+        buyerID: this.buyerID,
+        sellerID: this.sellerID,
+        listingID: this.listingID
+      }
+    })
+    .then(x => x.json())
+    .then(x => console.log(x))
+
     this.setState(st => { return { itemHasBeenPurchased: true }});
   }
+
   render = () => {
     return (
       <div className="FlexTopLeft">
