@@ -39,10 +39,24 @@ class App extends Component {
   getPageToDisplay = () => {
     if (this.state.userLoggedIn) {
       return (<Alibay />)
+    }
+    if (this.state.userRegistered) {
+      return (
+      <div>
+        <Login inputValidated={this.wasInputValidated} />
+        <p>Not Registered? <button onClick={this.showSignUp}>Sign Up</button></p>
+      </div>
+      )
     } else {
-      return (<Login inputValidated={this.wasInputValidated} />)
+      return (
+      <div>
+        <SignUp inputValidated={this.wasInputValidated} />
+        <p>Already Registered <button onClick={this.showLogIn}>Log In</button></p>
+      </div>
+      )
     }
   }
+  
   render = () => {
     return (
       <div className="App">
