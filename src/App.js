@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
-import { getAllListings, getItemsBoughtListings, getItemsSoldListing, getCreateListings, getPerformSearch, getPurchaseItem } from './requests';
+import { 
+  getAllListings, 
+  getItemsBoughtListings, 
+  getItemsSoldListing, 
+  getCreateListings, 
+  getPerformSearch, 
+  getPurchaseItem } from './requests';
 import Sidebar from './Sidebar';
 import Searchbar from './Searchbar';
 import Viewer from './Viewer';
@@ -130,7 +136,7 @@ class Alibay extends Component {
         return this.setItemsSoldListing();
       case 'itemSold' && (this.sellerID !== undefined):
         return this.getItemDecsription();
-      // default: this.setAllListings();
+      default: this.setAllListings();
     }
     this.setState(st => { return { pageToDisplayInViewer: pageName } });
   }
