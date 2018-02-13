@@ -6,8 +6,17 @@ class App extends Component {
     super();
     this.state = {
       userLoggedIn: false,
+      userRegistered: true,
       userID: undefined
     }
+  }
+
+  showSignUp = () => {
+    this.setState(st => { return { userRegistered: false }});
+  }
+
+  showLogIn = () => {
+    this.setState(st => { return { userRegistered: true }});
   }
 
   wasInputValidated = (inputValidationWasSuccessful) => {
@@ -22,17 +31,58 @@ class App extends Component {
   getPageToDisplay = () => {
     if (this.state.userLoggedIn) {
       return (<Alibay />)
+<<<<<<< HEAD
     } else {
       return (<Login inputValidated={this.wasInputValidated} />)
+=======
+    }
+    if (this.state.userRegistered) { // Show login page...
+      return (
+        <div>
+          <Login inputValidated={this.wasInputValidated}/>
+          <p>
+            Not registered? <button onClick={this.showSignUp}>Sign up</button>
+          </p>
+        </div>
+      )
+    } else { // Show sign-up page...
+      return (
+        <div>
+          <SignUp />
+          <p>
+            Already registered? <button onClick={this.showLogIn}>Log In</button>
+          </p>
+        </div>
+      );
+>>>>>>> ff0be712a90628a037af55cd1cbd7133bc6f82d6
     }
   }
   render = () => {
     return (
       <div className="App">
-        <img src="AlibayIconAnimation.gif" alt="Alibay" />
+        <img className="Icon" src="AlibayIcon.gif" alt="Alibay" />
         <div>
           {this.getPageToDisplay()}
         </div>
+      </div>
+    );
+  }
+}
+
+class SignUp extends Component {
+  constructor() {
+    super();
+    this.state = {}
+  }
+  render = () => {
+    return (
+      <div>
+        <h2>Sign Up</h2>
+        <input ref={suunf => this.signUpUsernameField = suunf} placeholder="Username" type="text"/>
+        <input ref={supwf => this.signUpPasswordField = supwf} placeholder="Password" type="password"/>
+        <input ref={supwcf => this.signUpPasswordConfirmationField = supwcf} placeholder="Confirm Password" type="password"/>
+        <button onClick={this.validateInputs}>Sign Up</button>
+        <div ref={suntf => this.signUpNotificationArea = suntf}></div>
       </div>
     );
   }
