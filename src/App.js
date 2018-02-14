@@ -6,13 +6,9 @@ import {
   getItemsSoldListing,
   getCreateListings,
   getPerformSearch,
-<<<<<<< HEAD
   getPurchaseItem,
   getItemDescription
 } from './requests';
-=======
-  getPurchaseItem } from './requests';
->>>>>>> 661ee082d8cb43133a9874d2016fb07109be2342
 import Sidebar from './Sidebar';
 import Searchbar from './Searchbar';
 import Viewer from './Viewer';
@@ -29,7 +25,7 @@ class App extends Component {
     this.state = {
       userLoggedIn: false,
       userRegistered: true,
-      userID: undefined
+      userID: 12
     }
   }
 
@@ -95,7 +91,7 @@ class Alibay extends Component {
       .then(async listingIDs => {
         const listingItems = await Promise.all(listingIDs.map(listingID => getItemDescription(listingID)));
 
-        console.log(listingItems)
+        // console.log(listingItems)
         // var tempListing = []
         // for (var i = 0; i < this.listings.length; i++) {
         //   console.log('test1')
@@ -115,6 +111,7 @@ class Alibay extends Component {
     getItemsBoughtListings(this.props.userID)
       .then(async listingIDs => {
         const listingBoughtItems = await Promise.all(listingIDs.map(listingID => getItemDescription(listingID)));
+        console.log(listingBoughtItems)
         this.setState({ pageToDisplayInViewer: 'itemsBought', listings: listingBoughtItems });
       });
   }
@@ -149,7 +146,7 @@ class Alibay extends Component {
   }
 
   render = () => {
-    console.log(this.state)
+    // console.log(this.state)
     return (
       <div className="FlexCenter">
         <div>

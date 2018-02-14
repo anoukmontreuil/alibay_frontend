@@ -29,19 +29,13 @@ export function logIn(username, password) {
   .then(y => console.log(y));
 };
 
-<<<<<<< HEAD
-
-export function getItemsBoughtListings() {
-    return fetch('/allItemsBought')
-=======
 export function getItemsBoughtListings(userID) {
-    return fetch('/allItemsBought?uid=m' /*+ this.userID*/)
->>>>>>> 661ee082d8cb43133a9874d2016fb07109be2342
+    return fetch('/allItemsBought' + userID)
       .then(x => x.json());
 };
 
-export function getItemsSoldListing() {
-    return fetch('/allItemsSold')
+export function getItemsSoldListing(userID) {
+    return fetch('/allItemsSold' + userID)
       .then(x => x.json());
 };
 
