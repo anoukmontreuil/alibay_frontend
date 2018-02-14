@@ -9,6 +9,7 @@ export function signUp(username, password) {
   console.log("The following object will be sent in the body of the POST request: " + bodyContents);
   return fetch('http://localhost:4000/signUp', {
     method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
     body: bodyContents
   }
    /*+ userID*/)
@@ -16,12 +17,13 @@ export function signUp(username, password) {
   .then(y => console.log(y));
 };
 
-export function logIn(username, password) {
+export function login(username, password) {
   // NOTE: Password was hashed in the front-end prior to being passed as a parameter to this function.
   const bodyContents = JSON.stringify({'username': username, 'hashedPassword': password});
   console.log("The following object will be sent in the body of the POST request: " + bodyContents);
-  return fetch('http://localhost:4000/logIn', {
+  return fetch('http://localhost:4000/login', {
     method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
     body: bodyContents
   }
    /*+ userID*/)
@@ -29,14 +31,8 @@ export function logIn(username, password) {
   .then(y => console.log(y));
 };
 
-<<<<<<< HEAD
-
-export function getItemsBoughtListings() {
-    return fetch('/allItemsBought')
-=======
 export function getItemsBoughtListings(userID) {
     return fetch('/allItemsBought?uid=m' /*+ this.userID*/)
->>>>>>> 661ee082d8cb43133a9874d2016fb07109be2342
       .then(x => x.json());
 };
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { logIn } from './requests';
+import { login } from './requests';
 
 const sha1 = require('sha1');
 
@@ -50,7 +50,7 @@ class Login extends Component {
       <h3 class="ValidationHeader">
         ...Validating Credentials, Please Wait...
       </h3>`;
-      logIn(this.usernameField.value, sha1(this.passwordField));
+      login(this.usernameField.value, sha1(this.passwordField.value));
     }
   }
   

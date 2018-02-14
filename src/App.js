@@ -6,13 +6,8 @@ import {
   getItemsSoldListing,
   getCreateListings,
   getPerformSearch,
-<<<<<<< HEAD
   getPurchaseItem,
-  getItemDescription
-} from './requests';
-=======
-  getPurchaseItem } from './requests';
->>>>>>> 661ee082d8cb43133a9874d2016fb07109be2342
+  getItemDescription } from './requests';
 import Sidebar from './Sidebar';
 import Searchbar from './Searchbar';
 import Viewer from './Viewer';
