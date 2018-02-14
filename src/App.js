@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
-import { 
-  getAllListings, 
-  getItemsBoughtListings, 
-  getItemsSoldListing, 
-  getCreateListings, 
-  getPerformSearch, 
+import {
+  getAllListings,
+  getItemsBoughtListings,
+  getItemsSoldListing,
+  getCreateListings,
+  getPerformSearch,
   getPurchaseItem } from './requests';
 import Sidebar from './Sidebar';
 import Searchbar from './Searchbar';
@@ -14,6 +14,8 @@ import ItemCard from './ItemCard';
 import AddListing from './AddListing';
 import SignUp from './Signup';
 import Login from './Login';
+
+
 
 class App extends Component {
   constructor() {
@@ -35,8 +37,8 @@ class App extends Component {
 
   wasInputValidated = (inputValidationWasSuccessful) => {
     /* TO-DO: The following line is just a temporary measure
-       while we have no back-end to work from. 
-       (The app currently accepts any valid credentials 
+       while we have no back-end to work from.
+       (The app currently accepts any valid credentials
        from a front-end perspective only.)*/
     this.setState(st => { return { userLoggedIn: true } })
     return inputValidationWasSuccessful;
@@ -57,7 +59,7 @@ class App extends Component {
       return (
         <div>
           <SignUp inputValidated={this.wasInputValidated} />
-          <p>Already Registered <button onClick={this.showLogIn}>Log In</button></p>
+          <p>Already Registered? <button onClick={this.showLogIn}>Log In</button></p>
         </div>
       )
     }
@@ -74,6 +76,8 @@ class App extends Component {
     );
   }
 }
+
+
 
 class Alibay extends Component {
   constructor() {
@@ -124,8 +128,6 @@ class Alibay extends Component {
       .then(x => x.json())
   }
 
-
-
   setPageToDisplayInViewer = pageName => {
     switch (pageName) {
       case 'allListings':
@@ -140,8 +142,6 @@ class Alibay extends Component {
     }
     this.setState(st => { return { pageToDisplayInViewer: pageName } });
   }
-
-
 
   render = () => {
     console.log(this.state)
@@ -159,41 +159,9 @@ class Alibay extends Component {
   }
 }
 
-
-
-
-
-
-
-// class ItemsPurchased extends Component {
-//   constructor() {
-//     super();
-//     this.state = {}
-//   }
-//   render = () => {
-//     return (
-//       <div>
-//       </div>
-//     );
-//   }
-// }
-
-// class ItemsSold extends Component {
-//   constructor() {
-//     super();
-//     this.state = {}
-//   }
-//   render = () => {
-//     return (
-//       <div>
-//       </div>
-//     );
-//   }
-// }
-
-
-
 export default App;
+
+
 
 /* --- START: COMPONENT CLASS TEMPLATE ----------------------------------------------------
 class App extends Component {
