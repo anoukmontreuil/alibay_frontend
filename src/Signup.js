@@ -56,10 +56,7 @@ class SignUp extends Component {
       <h3 class="ValidationHeader">
         ...Validating Credentials, Please Wait...
       </h3>`
-      console.log("The following credentials will be sent to the back-end for validation: \n",
-                  "Username: " + this.signUpUsernameField.value + "\n",
-                  "Hashed Password: " + sha1(this.signUpPasswordField));
-      signUp(this.signUpUsernameField.value, sha1(this.signUpPasswordField));
+      signUp(this.signUpUsernameField.value, sha1(this.signUpPasswordField.value));
     }
   }
   

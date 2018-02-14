@@ -7,8 +7,12 @@ import {
   getCreateListings,
   getPerformSearch,
   getPurchaseItem,
+<<<<<<< HEAD
   getItemDescription
 } from './requests';
+=======
+  getItemDescription } from './requests';
+>>>>>>> d670d0caebe553a557990911df65ce8463996dcf
 import Sidebar from './Sidebar';
 import Searchbar from './Searchbar';
 import Viewer from './Viewer';
