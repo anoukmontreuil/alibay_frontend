@@ -1,5 +1,5 @@
 export function getAllListings() {
-    return fetch('/allListings')
+  return fetch('/allListings')
     .then(x => x.json());
 }
 
@@ -13,8 +13,8 @@ export function signUp(username, password) {
     body: bodyContents
   }
    /*+ userID*/)
-  .then(x => x.text())
-  .then(y => console.log(y));
+    .then(x => x.text())
+    .then(y => console.log(y));
 };
 
 export function login(username, password) {
@@ -30,14 +30,15 @@ export function login(username, password) {
   .then(x => x.text())
 };
 
-export function getItemsBoughtListings(userID) {
-    return fetch('/allItemsBought?uid=m' /*+ this.userID*/)
-      .then(x => x.json());
+export function getItemsBoughtListings(uid) {
+  console.log(uid)
+  return fetch('/allItemsBought?uid=' + uid)
+    .then(x => x.json());
 };
 
-export function getItemsSoldListing() {
-    return fetch('/allItemsSold')
-      .then(x => x.json());
+export function getItemsSoldListing(uid) {
+  return fetch('/allItemsSold?uid=' + uid)
+    .then(x => x.json());
 };
 
 // export function getCreateListings() {
@@ -54,24 +55,24 @@ export function getItemsSoldListing() {
 
 export function getCreateListings() {
   return fetch('/createListing')
-      .then(x => x.json());
+    .then(x => x.json());
 };
 
 export function getPerformSearch() {
-    return fetch('/searchForListings')
-      .then(x => x.json());
+  return fetch('/searchForListings')
+    .then(x => x.json());
 }
 
 export function getPurchaseItem() {
-    return fetch('/buy', {
-        method: "POST",
-        body: {
-          buyerID: this.buyerID,
-          sellerID: this.sellerID,
-          listingID: this.listingID
-        }
-      })
-        .then(x => x.json());
+  return fetch('/buy', {
+    method: "POST",
+    body: {
+      buyerID: this.buyerID,
+      sellerID: this.sellerID,
+      listingID: this.listingID
+    }
+  })
+    .then(x => x.json());
 }
 
 export function getItemDescription(listingID) {
@@ -80,7 +81,7 @@ export function getItemDescription(listingID) {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({listingID})
+    body: JSON.stringify({ listingID })
   })
     .then(x => x.json())
 };
