@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
-import { 
-  getAllListings, 
-  getItemsBoughtListings, 
-  getItemsSoldListing, 
-  getCreateListings, 
-  getPerformSearch, 
-  getPurchaseItem } from './requests';
+import {
+  getAllListings,
+  getItemsBoughtListings,
+  getItemsSoldListing,
+  getCreateListings,
+  getPerformSearch,
+  getPurchaseItem,
+  getItemDescription
+} from './requests';
 import Sidebar from './Sidebar';
 import Searchbar from './Searchbar';
 import Viewer from './Viewer';
@@ -82,29 +84,31 @@ class Alibay extends Component {
   }
   setAllListings = () => {
     getAllListings(this.props.userID)
-      // .then(x => { console.log(x); return x })
-      .then(x => {
-        console.log(x)
-        var tempListing = []
-        for (var i = 0; i < x.temsContent.length; i++) {
-          console.log('test1')
-          tempListing.push({
-            price: x.temsContent[i].price,
-            seller: x.temsContent[i].seller,
-            blurb: x.temsContent[i].blurb,
-            buyer: false,
-            listingID: x.tempItems[i]
-          })
-        }
-        console.log(tempListing)
-        this.setState({ pageToDisplayInViewer: 'allListings', listings: tempListing })
+      .then(async listingIDs => {
+        const listingItems = await Promise.all(listingIDs.map(listingID => getItemDescription(listingID)));
+
+        console.log(listingItems)
+        // var tempListing = []
+        // for (var i = 0; i < this.listings.length; i++) {
+        //   console.log('test1')
+        //   tempListing.push({
+        //     price: getItemDecsription()
+        // blurb: x.listings[i].blurb,
+        // buyer: x.listings[i].buyer,
+        // listingID: x.listings[i]
+        // })
+        // })
+        // console.log(tempListing)
+        this.setState({ pageToDisplayInViewer: 'allListings', listings: listingItems })
       });
   }
 
   setItemsBoughtListing = () => {
     getItemsBoughtListings(this.props.userID)
-      .then(x =>
-        this.setState({ pageToDisplayInViewer: 'itemsBought', listings: x }));
+      .then(async listingIDs => {
+        const listingBoughtItems = await Promise.all(listingIDs.map(listingID => getItemDescription(listingID)));
+        this.setState({ pageToDisplayInViewer: 'itemsBought', listings: listingBoughtItems });
+      });
   }
 
   setItemsSoldListing = () => {
@@ -119,10 +123,7 @@ class Alibay extends Component {
         this.setState({ listings: x }));
   }
 
-  getItemDecsription = () => {
-    fetch('/getItemDescription')
-      .then(x => x.json())
-  }
+
 
 
 

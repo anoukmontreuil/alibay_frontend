@@ -1,8 +1,8 @@
 export function getAllListings() {
     return fetch('/allListings')
     .then(x => x.json());
+}
 
-    
 export function signUp(username, password) {
   console.log("Function Parameter 1 -> Username: " + username);
   console.log("Function Parameter 2 -> Password: " + password);
@@ -34,26 +34,31 @@ export function logIn(username, password) {
 };
 
 
-export function getItemsBoughtListings(userID) {
-    return fetch('/allItemsBought?uid=m' /*+ this.userID*/)
+export function getItemsBoughtListings() {
+    return fetch('/allItemsBought')
       .then(x => x.json());
 };
 
-export function getItemsSoldListing(userID) {
-    return fetch('/allItemsSold?uid=m' /*+ this.userID*/)
+export function getItemsSoldListing() {
+    return fetch('/allItemsSold')
       .then(x => x.json());
 };
+
+// export function getCreateListings() {
+//     return fetch('/createListing', {
+//         method: "POST",
+//         body: {
+//           sellerID: this.userID,
+//           price: this.price,
+//           blurb: this.blurb
+//         }
+//       })
+//         .then(x => x.json());
+// };
 
 export function getCreateListings() {
-    return fetch('/createListing', {
-        method: "POST",
-        body: {
-          sellerID: this.userID,
-          price: this.price,
-          blurb: this.blurb
-        }
-      })
-        .then(x => x.json());
+  return fetch('/createListing')
+      .then(x => x.json());
 };
 
 export function getPerformSearch() {
@@ -72,3 +77,14 @@ export function getPurchaseItem() {
       })
         .then(x => x.json());
 }
+
+export function getItemDescription(listingID) {
+  return fetch('/getItemDescription', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({listingID})
+  })
+    .then(x => x.json())
+};

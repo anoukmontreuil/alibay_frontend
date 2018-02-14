@@ -23,14 +23,12 @@ class ItemCard extends Component {
       <div className="FlexTopLeft">
         <div className="CardBody">
           <div className="CardPrice">
-            {/* {this.props.listings.forEach(element => {
-              this.props.price(element)
-            })} */}
-
-price : {this.props.price}
+            price : {this.props.price}
           </div>
         </div>
         <div className="CardDescription">
+          seller: {this.props.seller}
+          blurb: {this.props.blurb}
           <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam non ullamcorper lacus. Aliquam augue elit, dictum ac magna nec, blandit hendrerit felis. Ut pretium, sapien nec venenatis cursus, urna eros.</div>
         </div>
       </div>
