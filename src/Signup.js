@@ -8,6 +8,7 @@ class SignUp extends Component {
     super();
     this.state = {}
   }
+
   validateInputs = () => {
     // Validation Constants...
     const MIN_USERNAME_LENGTH = 1;
@@ -24,7 +25,7 @@ class SignUp extends Component {
     let signUpPasswordLengthAdequate = (this.signUpPasswordField.value.length >= MIN_PASSWORD_LENGTH
       && this.signUpPasswordField.value.length <= MAX_PASSWORD_LENGTH);
 
-    // Input evaluation process...                           
+    // Input evaluation process...
     let inputIsValid = true;
 
     if (!signUpUsernameLengthAdequate || !signUpPasswordLengthAdequate || this.signUpPasswordField.value !== this.signUpPasswordConfirmationField.value) {
@@ -55,12 +56,13 @@ class SignUp extends Component {
       <h3 class="ValidationHeader">
         ...Validating Credentials, Please Wait...
       </h3>`
-      console.log("The following credentials will be sent to the back-end for validation: \n", 
-                  "Username: " + this.signUpUsernameField.value + "\n", 
+      console.log("The following credentials will be sent to the back-end for validation: \n",
+                  "Username: " + this.signUpUsernameField.value + "\n",
                   "Hashed Password: " + sha1(this.signUpPasswordField));
       signUp(this.signUpUsernameField.value, sha1(this.signUpPasswordField));
     }
   }
+  
   render = () => {
     return (
       <div>

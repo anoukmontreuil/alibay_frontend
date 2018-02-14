@@ -4,9 +4,7 @@ export function getAllListings() {
 }
 
 export function signUp(username, password) {
-  console.log("Function Parameter 1 -> Username: " + username);
-  console.log("Function Parameter 2 -> Password: " + password);
-  console.log("Request 'SignUp' Sent From REQUESTS.JS (front-end) to API.JS (back-end)")
+  // NOTE: Password was hashed in the front-end prior to being passed as a parameter to this function.
   const bodyContents = JSON.stringify({'username': username, 'hashedPassword': password});
   console.log("The following object will be sent in the body of the POST request: " + bodyContents);
   return fetch('http://localhost:4000/signUp', {
@@ -19,9 +17,7 @@ export function signUp(username, password) {
 };
 
 export function logIn(username, password) {
-  console.log("Function Parameter 1 -> Username: " + username);
-  console.log("Function Parameter 2 -> Password: " + password);
-  console.log("Request 'SignUp' Sent From REQUESTS.JS (front-end) to API.JS (back-end)")
+  // NOTE: Password was hashed in the front-end prior to being passed as a parameter to this function.
   const bodyContents = JSON.stringify({'username': username, 'hashedPassword': password});
   console.log("The following object will be sent in the body of the POST request: " + bodyContents);
   return fetch('http://localhost:4000/logIn', {
@@ -33,9 +29,14 @@ export function logIn(username, password) {
   .then(y => console.log(y));
 };
 
+<<<<<<< HEAD
 
 export function getItemsBoughtListings() {
     return fetch('/allItemsBought')
+=======
+export function getItemsBoughtListings(userID) {
+    return fetch('/allItemsBought?uid=m' /*+ this.userID*/)
+>>>>>>> 661ee082d8cb43133a9874d2016fb07109be2342
       .then(x => x.json());
 };
 

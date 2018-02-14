@@ -8,6 +8,7 @@ class Login extends Component {
     super(props);
     this.state = {}
   }
+
   validateInputs = () => {
     // Validation Constants...
     const MIN_USERNAME_LENGTH = 1;
@@ -24,7 +25,7 @@ class Login extends Component {
     let passwordLengthAdequate = (this.passwordField.value.length >= MIN_PASSWORD_LENGTH
       && this.passwordField.value.length <= MAX_PASSWORD_LENGTH);
 
-    // Input evaluation process...                           
+    // Input evaluation process...
     let inputIsValid = true;
 
     if (!usernameLengthAdequate || !passwordLengthAdequate) {
@@ -52,6 +53,7 @@ class Login extends Component {
       logIn(this.usernameField.value, sha1(this.passwordField));
     }
   }
+  
   render = () => {
     return (
       <div>
