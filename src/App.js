@@ -7,7 +7,8 @@ import {
   getCreateListings,
   getPerformSearch,
   getPurchaseItem,
-  getItemDescription } from './requests';
+  getItemDescription
+} from './requests';
 import Sidebar from './Sidebar';
 import Searchbar from './Searchbar';
 import Viewer from './Viewer';
@@ -24,7 +25,7 @@ class App extends Component {
     this.state = {
       userLoggedIn: false,
       userRegistered: true,
-      userID: ""
+      userID: "11111111"
     };
   };
 
@@ -47,7 +48,7 @@ class App extends Component {
 
   getPageToDisplay = () => {
     if (this.state.userLoggedIn) {
-      return (<Alibay userID={this.state.userID}/>)
+      return (<Alibay userID={this.state.userID} />)
     };
     if (this.state.userRegistered) {
       return (
@@ -104,11 +105,15 @@ class Alibay extends Component {
 
   setItemsSoldListing = () => {
     getItemsSoldListing(this.props.userID)
-    .then(async listingIDs => {
-      const listingSoldItems = await Promise.all(listingIDs.map(listingID => getItemDescription(listingID)));
-      // console.log(listingSoldItems)
+      .then(async listingIDs => {
+        const listingSoldItems = await Promise.all(listingIDs.map(listingID => getItemDescription(listingID)));
+        console.log(listingSoldItems, this.props.userID)
         this.setState({ pageToDisplayInViewer: 'itemsSold', listings: listingSoldItems });
-    });
+      });
+  }
+
+  setListings = (listings) => {
+    this.setState({listings})
   }
 
   // createListing = () => {
@@ -116,8 +121,9 @@ class Alibay extends Component {
   //     .then(x =>
   //       this.setState({ listings: x }));
   // }
+
   setAddListing = () => {
-    this.setState({pageToDisplayInViewer: 'addItemListing'})
+    this.setState({pageToDisplayInViewer: 'addListing'})
   }
 
 
@@ -129,7 +135,7 @@ class Alibay extends Component {
         return this.setItemsBoughtListing();
       case 'itemsSold':
         return this.setItemsSoldListing();
-      case 'addItemListing':
+      case 'addListing':
         return this.setAddListing();
       default: this.setAllListings();
     }
@@ -137,22 +143,28 @@ class Alibay extends Component {
   }
 
   render = () => {
-    // console.log(this.state)
-    return (
-      <div className="FlexCenter">
-        <div>
-          <Sidebar pageToDisplayInViewer={this.setPageToDisplayInViewer} />
+    console.log('app state', this.state);
+    if (this.state.pageToDisplayInViewer === "addListing") {
+      return <AddListing allListings={this.state.listings}
+      setListings={this.setListings} />
+    } else {
+      return (
+        <div className="FlexCenter">
+          <div>
+            <Sidebar pageToDisplayInViewer={this.setPageToDisplayInViewer} />
+          </div>
+          <div>
+            <Searchbar ref={sb => this.searchField = sb} pageToDisplayInViewer={this.setPageToDisplayInViewer} />
+            <Viewer ref={pdm => this.pageViewer = pdm}
+              pageToDisplay={this.state.pageToDisplayInViewer}
+              allListings={this.state.listings}
+              setListings={this.setListings}
+              itemsBought={this.state.listings}
+              itemsSold={this.state.listings} />
+          </div>
         </div>
-        <div>
-          <Searchbar ref={sb => this.searchField = sb} pageToDisplayInViewer={this.setPageToDisplayInViewer} />
-          <Viewer ref={pdm => this.pageViewer = pdm} 
-          pageToDisplay={this.state.pageToDisplayInViewer} 
-          allListings={this.state.listings} 
-          itemsBought={this.state.listings}
-          itemsSold={this.state.listings}/>
-        </div>
-      </div>
-    );
+      );
+    }
   }
 }
 

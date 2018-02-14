@@ -32,7 +32,6 @@ export function login(username, password) {
 };
 
 export function getItemsBoughtListings(uid) {
-  console.log(uid)
   return fetch('/allItemsBought?uid=' + uid)
     .then(x => x.json());
 };
@@ -54,9 +53,19 @@ export function getItemsSoldListing(uid) {
 //         .then(x => x.json());
 // };
 
-export function getCreateListings() {
-  return fetch('/createListing')
-    .then(x => x.json());
+export function getCreateListings(sellerID, price, blurb) {
+  return fetch('/createListing', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ 
+      sellerID: sellerID,
+      price: price,
+      blurb: blurb 
+     })
+  })
+    .then(x => x.json())
 };
 
 export function getPerformSearch() {
@@ -64,13 +73,13 @@ export function getPerformSearch() {
     .then(x => x.json());
 }
 
-export function getPurchaseItem() {
+export function getPurchaseItem(buyerID, sellerID, listingID) {
   return fetch('/buy', {
     method: "POST",
     body: {
-      buyerID: this.buyerID,
-      sellerID: this.sellerID,
-      listingID: this.listingID
+      buyerID: buyerID,
+      sellerID: sellerID,
+      listingID: listingID
     }
   })
     .then(x => x.json());

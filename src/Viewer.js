@@ -25,9 +25,6 @@ class Viewer extends Component {
         </div>
       );
     };
-    if (nameOfPageToDisplay === "addListing") {
-      return <AddListing />
-    };
     if (nameOfPageToDisplay === "itemsBought") {
       var itemsBoughtMap = this.props.itemsBought.map((listing, idx) =>
         <div key={idx}>
@@ -45,11 +42,30 @@ class Viewer extends Component {
       );
     };
     if (nameOfPageToDisplay === "itemsSold") {
-      var itemsBoughtMap = this.props.itemsSold.map((listing, idx) =>
+      var itemsSoldMap = this.props.itemsSold.map((listing, idx) =>
         <div key={idx}>
-          <ItemCard listingID={listing.listingID} />
+          <ItemCard price={listing.price}
+            listingID={listing.listingID}
+            seller={listing.seller}
+            blurb={listing.blurb}
+            buyer={listing.buyer} />
         </div>
-      )
+      );
+      return (
+        <div>
+          {itemsSoldMap}
+        </div>
+      );
+      if (nameOfPageToDisplay === "addListing") {
+        console.log('viewer props', this.props)
+        return (
+          <div>
+            <AddListing
+              test="hey"
+              allListings={this.props.allListings}
+              setListings={this.props.setListings}  />
+          </div>)
+      };
     };
   };
 
