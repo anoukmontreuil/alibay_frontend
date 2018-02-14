@@ -7,7 +7,7 @@ import {
   getCreateListings,
   getPerformSearch,
   getPurchaseItem,
-  getItemDescription } from './requests';
+  getItemDescription} from './requests';
 import Sidebar from './Sidebar';
 import Searchbar from './Searchbar';
 import Viewer from './Viewer';

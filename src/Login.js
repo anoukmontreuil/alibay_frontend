@@ -6,7 +6,6 @@ const sha1 = require('sha1');
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = {}
   }
 
   validateInputs = () => {
@@ -45,12 +44,15 @@ class Login extends Component {
       </p>`
     }
     if (inputIsValid) {
+      this.setState(st => { return { inputsValid: true }});
       this.props.inputValidated(true);
       this.notificationArea.innerHTML += `
       <h3 class="ValidationHeader">
         ...Validating Credentials, Please Wait...
       </h3>`;
-      login(this.usernameField.value, sha1(this.passwordField.value));
+      login(this.usernameField.value, sha1(this.passwordField.value))
+      .then(y => this.setState( st => { return { CurrentUserID: y }}))
+      ;
     }
   }
   
@@ -58,8 +60,8 @@ class Login extends Component {
     return (
       <div>
         <h2>Log In</h2>
-        <input ref={unf => this.usernameField = unf} placeholder="Username" type="text" />
-        <input ref={pwf => this.passwordField = pwf} placeholder="Password" type="password" />
+        <input ref={unf => this.usernameField = unf} onChange={this.checkIfInputsNowValid} placeholder="Username" type="text" />
+        <input ref={pwf => this.passwordField = pwf} onChange={this.checkIfInputsNowValid} placeholder="Password" type="password" />
         <button onClick={this.validateInputs}>Log In</button>
         <div ref={ntf => this.notificationArea = ntf}></div>
       </div>
