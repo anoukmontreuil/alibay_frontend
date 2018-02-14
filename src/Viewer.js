@@ -31,7 +31,16 @@ class Viewer extends Component {
     if (nameOfPageToDisplay === "itemsBought") {
       var itemsBoughtMap = this.props.itemsBought.map((listing, idx) =>
         <div key={idx}>
-          <ItemCard listingID={listing.listingID} />
+          <ItemCard price={listing.price}
+            listingID={listing.listingID}
+            seller={listing.seller}
+            blurb={listing.blurb}
+            buyer={listing.buyer} />
+        </div>
+      );
+      return (
+        <div>
+          {itemsBoughtMap}
         </div>
       );
     };
