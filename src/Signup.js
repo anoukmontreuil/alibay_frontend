@@ -6,7 +6,15 @@ const sha1 = require('sha1');
 class SignUp extends Component {
   constructor() {
     super();
-    this.state = {}
+    this.state = { newUserCreated: false }
+  }
+
+  confirmNewCredentialsValidOnServer = (newUserID) => {
+    return this.props.newUser(newUserID);
+  }
+
+  clearSignUpNotificationArea = () => {
+    this.signUpNotificationArea.innerHTML = ``;
   }
 
   validateInputs = () => {
@@ -56,7 +64,32 @@ class SignUp extends Component {
       <h3 class="ValidationHeader">
         ...Validating Credentials, Please Wait...
       </h3>`
-      signUp(this.signUpUsernameField.value, sha1(this.signUpPasswordField.value));
+      signUp(this.signUpUsernameField.value, sha1(this.signUpPasswordField.value))
+      .then(y => {
+        this.clearSignUpNotificationArea();
+        if (y === "\"success\"") {
+          this.signUpNotificationArea.innerHTML = `<h3 class="SuccessHeader">Success</h3>
+          <p class="SuccessMessage">
+          Registration Successful!
+          </p>
+          `
+        } else {
+          this.signUpNotificationArea.innerHTML = `<h3 class="ErrorHeader">Error</h3>`
+          if (y === "\"Username not available\"" ) {
+            this.signUpNotificationArea.innerHTML += `
+            <p class="ErrorMessage">
+            Username is already in use. Please select a different username.
+            </p>
+            `
+          }
+          if (y === "\"Signup Failed\"" )
+          this.signUpNotificationArea.innerHTML += `
+          <p class="ErrorMessage">
+          Registration Failed. Please try again.
+          </p>
+          `
+        }
+      });
     }
   }
   

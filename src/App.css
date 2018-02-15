@@ -84,6 +84,15 @@ img {
   color: #08C;
 }
 
+.SuccessHeader {
+  background-color: #040;
+  color: #693;
+}
+
+.SuccessMessage {
+  color: #9C6;
+}
+
 .Sidebar {
   background-color: #333;
   border-radius: 5px;

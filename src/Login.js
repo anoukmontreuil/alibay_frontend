@@ -69,7 +69,8 @@ class Login extends Component {
           <h3 class="ErrorHeader">Error</h3>
           <p class="ErrorMessage">
             Invalid Username/Password.
-          </p>`
+          </p>
+          `
         }
       });
     }

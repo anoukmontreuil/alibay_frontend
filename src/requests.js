@@ -14,7 +14,6 @@ export function signUp(username, password) {
   }
    /*+ userID*/)
     .then(x => x.text())
-    .then(y => console.log(y));
 };
 
 export function login(username, password) {
