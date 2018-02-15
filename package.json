@@ -7,12 +7,14 @@
     "react-dom": "^16.2.0",
     "react-dropzone": "^4.2.7",
     "react-scripts": "1.1.1",
-    "react-simple-image-upload": "^0.9.0"
+    "react-simple-image-upload": "^0.9.0",
+    "sha1": "^1.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  }
+  },
+  "proxy": "http://localhost:4000"
 }

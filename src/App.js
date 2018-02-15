@@ -116,7 +116,7 @@ class Alibay extends Component {
       .then(async listingIDs => {
         const listingItems = await Promise.all(listingIDs.map(listingID => getItemDescription(listingID)));
 
-        console.log(listingItems)
+        // console.log(listingItems)
         // var tempListing = []
         // for (var i = 0; i < this.listings.length; i++) {
         //   console.log('test1')
@@ -178,7 +178,7 @@ class Alibay extends Component {
   }
 
   render = () => {
-    console.log('app state', this.state);
+    console.log('app state', this.state)
     if (this.state.pageToDisplayInViewer === "addListing") {
       return <AddListing allListings={this.state.listings}
         setListings={this.setListings}
@@ -198,7 +198,8 @@ class Alibay extends Component {
               setListings={this.setListings}
               itemsBought={this.state.listings}
               itemsSold={this.state.listings}
-              userID={this.props.userID} />
+              userID={this.props.userID} 
+              appState={this.state.pageToDisplayInViewer} />
           </div>
         </div>
       );

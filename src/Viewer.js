@@ -17,7 +17,8 @@ class Viewer extends Component {
             seller={listing.seller}
             blurb={listing.blurb}
             buyer={listing.buyer}
-            userID={this.props.userID} />
+            userID={this.props.userID}
+            appState={this.props.appState} />
         </div>
       );
       return (
@@ -34,7 +35,8 @@ class Viewer extends Component {
             seller={listing.seller}
             blurb={listing.blurb}
             buyer={listing.buyer} 
-            userID={this.props.userID}/>
+            userID={this.props.userID}
+            appState={this.props.appState}/>
         </div>
       );
       return (
@@ -51,7 +53,8 @@ class Viewer extends Component {
             seller={listing.seller}
             blurb={listing.blurb}
             buyer={listing.buyer} 
-            userID={this.props.userID}/>
+            userID={this.props.userID}
+            appState={this.props.appState}/>
         </div>
       );
       return (
@@ -63,7 +66,7 @@ class Viewer extends Component {
   };
 
   render = () => {
-    console.log(this.props)
+    console.log(this.props.appState)
     return (
       <div className="Display">
         {this.getPageToDisplay()}
