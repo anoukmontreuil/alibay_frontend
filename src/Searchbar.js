@@ -8,10 +8,13 @@ class Searchbar extends Component {
   }
 
   performSearch = () => {
-    getPerformSearch();
-    if (this.searchBar.value === "") {
-      this.props.pageToDisplayInViewer(this.pageName);
-    } else { }
+    getPerformSearch(this.searchBar.value)
+    // if (this.searchBar.value === "") {
+    //   this.props.pageToDisplayInViewer(this.pageName);
+    // } else {
+    .then(x => console.log(x))
+    // }
+
   }
 
   render = () => {

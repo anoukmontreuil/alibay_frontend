@@ -182,7 +182,7 @@ class Alibay extends Component {
   }
 
   render = () => {
-    console.log('app state', this.state)
+    // console.log('app state', this.state)
     if (this.state.pageToDisplayInViewer === "addListing") {
       return <AddListing allListings={this.state.listings}
         setListings={this.setListings}

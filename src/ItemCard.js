@@ -24,7 +24,7 @@ class ItemCard extends Component {
         <div className="FlexTopLeft">
           <div className="CardBody">
             <div className="CardPrice">
-              price : {this.props.price}
+              
             </div>
             <div className="FlexCenterLeft">
               {this.state.itemHasBeenPurchased || this.props.userID === this.props.seller ?
@@ -46,7 +46,7 @@ class ItemCard extends Component {
         <div className="FlexTopLeft">
           <div className="CardBody">
             <div className="CardPrice">
-              price : {this.props.price}
+              
             </div>
             <div className="FlexCenterLeft">
               

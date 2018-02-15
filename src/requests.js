@@ -56,10 +56,18 @@ export function getCreateListings(sellerID, price, blurb) {
     .then(x => x.json())
 };
 
-export function getPerformSearch() {
-  return fetch('/searchForListings')
-    .then(x => x.json());
-}
+export function getPerformSearch(searchTerm) {
+  return fetch('/searchForListings', {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      searchTerm: searchTerm
+    })
+  })
+    .then(x => x.text());
+};
 
 export function getPurchaseItem(buyerID, listingID) {
   return fetch('/buy', {
@@ -73,7 +81,6 @@ export function getPurchaseItem(buyerID, listingID) {
     })
   })
     .then(x => x.json())
-    .then(x => console.log(x));
 }
 
 export function getItemDescription(listingID) {
@@ -85,6 +92,7 @@ export function getItemDescription(listingID) {
     body: JSON.stringify({ listingID })
   })
     .then(x => x.json())
+    .then(x => ({ ...x, listingID }))
 };
 
 export function checkForExistingSession() {
@@ -100,6 +108,6 @@ export function uploadFile(x) {
     method: "POST", 
     body: x
   }) 
-}
-    .then(x => ({ ...x, listingID }))
 };
+    
+
