@@ -45,16 +45,20 @@ class App extends Component {
   }
 
   getUserID = (userIDFromChild) => {
-    if (userIDFromChild !== "\"Login Failed\"" 
-     && userIDFromChild !== "\"fail\"") {
-      this.setState(st => { return { 
-        userID: userIDFromChild, 
-        userLoggedIn: true } 
+    if (userIDFromChild !== "\"Login Failed\""
+      && userIDFromChild !== "\"fail\"") {
+      this.setState(st => {
+        return {
+          userID: userIDFromChild,
+          userLoggedIn: true
+        }
       });
     } else {
-      this.setState(st => { return { 
-        userID: undefined, 
-        userLoggedIn: false } 
+      this.setState(st => {
+        return {
+          userID: undefined,
+          userLoggedIn: false
+        }
       });
     }
     this.getPageToDisplay();
@@ -67,9 +71,9 @@ class App extends Component {
     if (this.state.userRegistered) {
       return (
         <div>
-          <Login ref={lgnfrm => this.loginForm = lgnfrm} 
-                 inputValidated={this.wasInputValidated}
-                 loggedInUser={this.getUserID}/> 
+          <Login ref={lgnfrm => this.loginForm = lgnfrm}
+            inputValidated={this.wasInputValidated}
+            loggedInUser={this.getUserID} />
           <p>Not Registered? <button onClick={this.showSignUp}>Sign Up</button></p>
         </div>
       )
@@ -98,8 +102,8 @@ class App extends Component {
 
 
 class Alibay extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = { pageToDisplayInViewer: "allListings", listings: [] }
     this.handler = this.handler.bind(this)
   }
@@ -116,7 +120,7 @@ class Alibay extends Component {
       .then(async listingIDs => {
         const listingItems = await Promise.all(listingIDs.map(listingID => getItemDescription(listingID)));
 
-        console.log(listingItems)
+        // console.log(listingItems)
         // var tempListing = []
         // for (var i = 0; i < this.listings.length; i++) {
         //   console.log('test1')
@@ -150,13 +154,16 @@ class Alibay extends Component {
   }
 
   setListings = (listings) => {
-    this.setState({listings})
+    this.setState({ listings })
   }
 
   setAddListing = () => {
-    this.setState({pageToDisplayInViewer: 'addListing'})
+    this.setState({ pageToDisplayInViewer: 'addListing' })
   }
 
+  componentDidMount() {
+    this.setAllListings();
+  }
 
 
   setPageToDisplayInViewer = pageName => {
@@ -175,11 +182,12 @@ class Alibay extends Component {
   }
 
   render = () => {
-    console.log('app state', this.state);
+    console.log('app state', this.state)
     if (this.state.pageToDisplayInViewer === "addListing") {
       return <AddListing allListings={this.state.listings}
-      setListings={this.setListings} 
-      handler = {this.handler} />
+        setListings={this.setListings}
+        userID={this.props.userID}
+        handler={this.handler} />
     } else {
       return (
         <div className="FlexCenter">
@@ -193,7 +201,9 @@ class Alibay extends Component {
               allListings={this.state.listings}
               setListings={this.setListings}
               itemsBought={this.state.listings}
-              itemsSold={this.state.listings} />
+              itemsSold={this.state.listings}
+              userID={this.props.userID} 
+              appState={this.state.pageToDisplayInViewer} />
           </div>
         </div>
       );

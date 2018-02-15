@@ -40,17 +40,6 @@ export function getItemsSoldListing(uid) {
     .then(x => x.json());
 };
 
-// export function getCreateListings() {
-//     return fetch('/createListing', {
-//         method: "POST",
-//         body: {
-//           sellerID: this.userID,
-//           price: this.price,
-//           blurb: this.blurb
-//         }
-//       })
-//         .then(x => x.json());
-// };
 
 export function getCreateListings(sellerID, price, blurb) {
   return fetch('/createListing', {
@@ -72,7 +61,7 @@ export function getPerformSearch() {
     .then(x => x.json());
 }
 
-export function getPurchaseItem(buyerID, sellerID, listingID) {
+export function getPurchaseItem(buyerID, listingID) {
   return fetch('/buy', {
     method: "POST",
     headers: {
@@ -80,11 +69,11 @@ export function getPurchaseItem(buyerID, sellerID, listingID) {
     },
     body: JSON.stringify({
       buyerID: buyerID,
-      sellerID: sellerID,
       listingID: listingID
     })
   })
-    .then(x => x.json());
+    .then(x => x.json())
+    .then(x => console.log(x));
 }
 
 export function getItemDescription(listingID) {
@@ -112,3 +101,5 @@ export function uploadFile(x) {
     body: x
   }) 
 }
+    .then(x => ({ ...x, listingID }))
+};

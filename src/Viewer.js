@@ -16,7 +16,9 @@ class Viewer extends Component {
             listingID={listing.listingID}
             seller={listing.seller}
             blurb={listing.blurb}
-            buyer={listing.buyer} />
+            buyer={listing.buyer}
+            userID={this.props.userID}
+            appState={this.props.appState} />
         </div>
       );
       return (
@@ -32,7 +34,9 @@ class Viewer extends Component {
             listingID={listing.listingID}
             seller={listing.seller}
             blurb={listing.blurb}
-            buyer={listing.buyer} />
+            buyer={listing.buyer} 
+            userID={this.props.userID}
+            appState={this.props.appState}/>
         </div>
       );
       return (
@@ -48,7 +52,9 @@ class Viewer extends Component {
             listingID={listing.listingID}
             seller={listing.seller}
             blurb={listing.blurb}
-            buyer={listing.buyer} />
+            buyer={listing.buyer} 
+            userID={this.props.userID}
+            appState={this.props.appState}/>
         </div>
       );
       return (
@@ -56,21 +62,11 @@ class Viewer extends Component {
           {itemsSoldMap}
         </div>
       );
-      // if (nameOfPageToDisplay === "addListing") {
-      //   console.log('viewer props', this.props)
-      //   return (
-      //     <div>
-      //       <AddListing
-      //         test="hey"
-      //         allListings={this.props.allListings}
-      //         setListings={this.props.setListings}  />
-      //     </div>)
-      // };
     };
   };
 
   render = () => {
-    // console.log(this.props)
+    console.log(this.props.appState)
     return (
       <div className="Display">
         {this.getPageToDisplay()}
