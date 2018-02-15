@@ -22,6 +22,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
+      appMounted: false,
       userLoggedIn: false,
       userRegistered: true,
       userID: undefined
@@ -29,7 +30,12 @@ class App extends Component {
   };
 
   componentDidMount() {
+    this.setState(st => { return { appMounted: true } });
     checkForExistingSession()
+    .then(response => { 
+      // 'substring' only strips out the wrapping double quotes around the userID.
+      this.setState( st => { return { userID: response.substring(1, response.length - 2) } } ) 
+      } )
   }
 
   showSignUp = () => {
@@ -65,10 +71,10 @@ class App extends Component {
   }
 
   getPageToDisplay = () => {
-    if (this.state.userLoggedIn) {
+    if (this.state.userID !== undefined && this.state.userID !== "no cookie") {
       return (<Alibay userID={this.state.userID} />)
-    };
-    if (this.state.userRegistered) {
+    }
+    if (this.state.userRegistered || this.state.userID !== undefined && this.state.userID === "no cookie") { // If user registered, show login page.
       return (
         <div>
           <Login ref={lgnfrm => this.loginForm = lgnfrm}
@@ -77,7 +83,7 @@ class App extends Component {
           <p>Not Registered? <button onClick={this.showSignUp}>Sign Up</button></p>
         </div>
       )
-    } else {
+    } else { // If user not registered, show signup page.
       return (
         <div>
           <SignUp inputValidated={this.wasInputValidated} />
@@ -92,7 +98,7 @@ class App extends Component {
       <div className="App">
         <img className="Icon" src="AlibayIcon.gif" alt="Alibay" />
         <div>
-          {this.getPageToDisplay()}
+          {!this.state.appMounted ? null : this.getPageToDisplay() }
         </div>
       </div>
     );
