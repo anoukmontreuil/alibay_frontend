@@ -40,7 +40,6 @@ export function getItemsSoldListing(uid) {
     .then(x => x.json());
 };
 
-
 export function getCreateListings(sellerID, price, blurb) {
   return fetch('/createListing', {
     method: 'POST',
@@ -99,6 +98,7 @@ export function checkForExistingSession() {
   return fetch('/check', {
     credentials: "same-origin"
   })
+  .then(x => x.text())
 }
 
 export function uploadFile(x) {
@@ -107,7 +107,12 @@ export function uploadFile(x) {
   fetch('/upics?ext=' + fileExtension, {
     method: "POST", 
     body: x
+<<<<<<< HEAD
   }) 
 };
     
 
+=======
+  })
+}
+>>>>>>> b41e4d1d82433df35720260380facee47a0289b7
