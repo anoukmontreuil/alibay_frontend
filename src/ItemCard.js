@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { getPurchaseItem } from './requests';
 
 class ItemCard extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       itemHasBeenPurchased: false,
       buyerID: null
@@ -11,8 +11,7 @@ class ItemCard extends Component {
   }
 
   purchaseItem = () => {
-    getPurchaseItem()
-      .then(x => console.log(x));
+    getPurchaseItem(this.props.buyer, this.props.seller, this.props.listingID)
     this.setState(st => { return { itemHasBeenPurchased: true } });
   }
 
@@ -25,6 +24,9 @@ class ItemCard extends Component {
           <div className="CardPrice">
             price : {this.props.price}
           </div>
+          <div className="FlexCenterLeft">
+          <button className="CardButton" onClick={this.purchaseItem}>Buy</button>
+        </div>
         </div>
         <div className="CardDescription">
           seller: {this.props.seller}

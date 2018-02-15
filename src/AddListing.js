@@ -14,14 +14,13 @@ class AddListing extends Component {
             )
     }
 
-
-
     render = () => {
         console.log('add listing props', this.props)
         return (
             <div className="ModalBackground">
                 <div className="ModalWindow">
                     <div className="ModalTitleBar">Add A Listing</div>
+                    <div><button onClick={this.props.handler}>X</button></div>
                     <div className="ModalBody">
                         <div className="BlockTopLeft">
                             <input ref={imgsel => this.imageSelector = imgsel} type="file" onChange={this.selectImageFile} />

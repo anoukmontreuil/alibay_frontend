@@ -56,16 +56,16 @@ class Viewer extends Component {
           {itemsSoldMap}
         </div>
       );
-      if (nameOfPageToDisplay === "addListing") {
-        console.log('viewer props', this.props)
-        return (
-          <div>
-            <AddListing
-              test="hey"
-              allListings={this.props.allListings}
-              setListings={this.props.setListings}  />
-          </div>)
-      };
+      // if (nameOfPageToDisplay === "addListing") {
+      //   console.log('viewer props', this.props)
+      //   return (
+      //     <div>
+      //       <AddListing
+      //         test="hey"
+      //         allListings={this.props.allListings}
+      //         setListings={this.props.setListings}  />
+      //     </div>)
+      // };
     };
   };
 

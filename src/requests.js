@@ -75,11 +75,14 @@ export function getPerformSearch() {
 export function getPurchaseItem(buyerID, sellerID, listingID) {
   return fetch('/buy', {
     method: "POST",
-    body: {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
       buyerID: buyerID,
       sellerID: sellerID,
       listingID: listingID
-    }
+    })
   })
     .then(x => x.json());
 }

@@ -23,7 +23,7 @@ class App extends Component {
     this.state = {
       userLoggedIn: false,
       userRegistered: true,
-      userID: "11111111"
+      userID: ""
     };
   };
 
@@ -41,7 +41,7 @@ class App extends Component {
 
   getUserID = (userIDFromChild) => {
     console.log(userIDFromChild); // OK, returns 1111111
-    this.setState(st => { return { loggedInUserId: userIDFromChild, userLoggedIn: true } });
+    this.setState(st => { return { userID: userIDFromChild, userLoggedIn: true } });
     this.getPageToDisplay();
     return userIDFromChild;
   }
@@ -88,7 +88,16 @@ class Alibay extends Component {
   constructor() {
     super();
     this.state = { pageToDisplayInViewer: "allListings", listings: [] }
+    this.handler = this.handler.bind(this)
   }
+
+  handler(e) {
+    e.preventDefault()
+    this.setState({
+      pageToDisplayInViewer: "allListings"
+    });
+  };
+
   setAllListings = () => {
     getAllListings(this.props.userID)
       .then(async listingIDs => {
@@ -108,7 +117,7 @@ class Alibay extends Component {
         // console.log(tempListing)
         this.setState({ pageToDisplayInViewer: 'allListings', listings: listingItems })
       });
-  }
+  };
 
   setItemsBoughtListing = () => {
     getItemsBoughtListings(this.props.userID)
@@ -122,7 +131,7 @@ class Alibay extends Component {
     getItemsSoldListing(this.props.userID)
       .then(async listingIDs => {
         const listingSoldItems = await Promise.all(listingIDs.map(listingID => getItemDescription(listingID)));
-        console.log(listingSoldItems, this.props.userID)
+        // console.log(listingSoldItems, this.props.userID)
         this.setState({ pageToDisplayInViewer: 'itemsSold', listings: listingSoldItems });
       });
   }
@@ -130,12 +139,6 @@ class Alibay extends Component {
   setListings = (listings) => {
     this.setState({listings})
   }
-
-  // createListing = () => {
-  //   getCreateListings(this.props.userID)
-  //     .then(x =>
-  //       this.setState({ listings: x }));
-  // }
 
   setAddListing = () => {
     this.setState({pageToDisplayInViewer: 'addListing'})
@@ -162,7 +165,8 @@ class Alibay extends Component {
     console.log('app state', this.state);
     if (this.state.pageToDisplayInViewer === "addListing") {
       return <AddListing allListings={this.state.listings}
-      setListings={this.setListings} />
+      setListings={this.setListings} 
+      handler = {this.handler} />
     } else {
       return (
         <div className="FlexCenter">
