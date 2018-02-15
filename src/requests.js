@@ -20,9 +20,10 @@ export function login(username, password) {
   // NOTE: Password was hashed in the front-end prior to being passed as a parameter to this function.
   const bodyContents = JSON.stringify({'username': username, 'password': password});
   console.log("The following object will be sent in the body of the POST request: " + bodyContents);
-  return fetch('http://localhost:4000/login', {
+  return fetch('/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
     body: bodyContents
   }
    /*+ userID*/)
@@ -96,3 +97,18 @@ export function getItemDescription(listingID) {
   })
     .then(x => x.json())
 };
+
+export function checkForExistingSession() {
+  return fetch('/check', {
+    credentials: "same-origin"
+  })
+}
+
+export function uploadFile(x) {
+  var filename = x.name;
+  var fileExtension = filename.split('.').pop();
+  fetch('/upics?ext=' + fileExtension, {
+    method: "POST", 
+    body: x
+  }) 
+}

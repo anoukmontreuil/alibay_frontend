@@ -7,7 +7,8 @@ import {
   getCreateListings,
   getPerformSearch,
   getPurchaseItem,
-  getItemDescription
+  getItemDescription,
+  checkForExistingSession
 } from './requests';
 import Sidebar from './Sidebar';
 import Searchbar from './Searchbar';
@@ -26,6 +27,10 @@ class App extends Component {
       userID: undefined
     };
   };
+
+  componentDidMount() {
+    checkForExistingSession()
+  }
 
   showSignUp = () => {
     this.setState(st => { return { userRegistered: false } });
@@ -56,7 +61,6 @@ class App extends Component {
   }
 
   getPageToDisplay = () => {
-
     if (this.state.userLoggedIn) {
       return (<Alibay userID={this.state.userID} />)
     };
