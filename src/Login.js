@@ -6,7 +6,15 @@ const sha1 = require('sha1');
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = { currentUserID: undefined };
+    this.state = { userID: undefined };
+  }
+
+  confirmCredentialsValidOnServer = (authorizedUserID) => {
+    return this.props.loggedInUser(authorizedUserID);
+  }
+
+  clearNotificationArea = () => {
+    this.notificationArea.innerHTML = ``;
   }
 
   validateInputs = () => {
@@ -17,7 +25,7 @@ class Login extends Component {
     const MAX_PASSWORD_LENGTH = 16;
 
     // Clear the notification area, just in case an error occured earlier.
-    this.notificationArea.innerHTML = ``
+    this.clearNotificationArea();
 
     // Assigning evaluation results to variables...
     let usernameLengthAdequate = (this.usernameField.value.length >= MIN_USERNAME_LENGTH
@@ -45,24 +53,30 @@ class Login extends Component {
       </p>`
     }
 
-
-
     if (inputIsValid) {
       this.setState(st => { return { inputsValid: true }});
-      //this.props.inputValidated(true);
       this.notificationArea.innerHTML += `
       <h3 class="ValidationHeader">
         ...Validating Credentials, Please Wait...
       </h3>`;
       login(this.usernameField.value, sha1(this.passwordField.value))
-      .then(y => { this.setState( st => { return { currentUserID: y }});
-                   
-                   this.props.loggedInUser(y);
-                  });
+      .then(y => { 
+        this.setState( st => { return { userID: y }});
+        this.props.loggedInUser(y);
+        if (y === "\"Login Failed\"" || y === "\"fail\"") {
+          this.clearNotificationArea();
+          this.notificationArea.innerHTML = `
+          <h3 class="ErrorHeader">Error</h3>
+          <p class="ErrorMessage">
+            Invalid Username/Password.
+          </p>`
+        }
+      });
     }
   }
   
   render = () => {
+    
     return (
       <div>
         <h2>Log In</h2>

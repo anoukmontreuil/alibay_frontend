@@ -23,7 +23,7 @@ class App extends Component {
     this.state = {
       userLoggedIn: false,
       userRegistered: true,
-      userID: ""
+      userID: undefined
     };
   };
 
@@ -40,10 +40,19 @@ class App extends Component {
   }
 
   getUserID = (userIDFromChild) => {
-    console.log(userIDFromChild); // OK, returns 1111111
-    this.setState(st => { return { userID: userIDFromChild, userLoggedIn: true } });
+    if (userIDFromChild !== "\"Login Failed\"" 
+     && userIDFromChild !== "\"fail\"") {
+      this.setState(st => { return { 
+        userID: userIDFromChild, 
+        userLoggedIn: true } 
+      });
+    } else {
+      this.setState(st => { return { 
+        userID: undefined, 
+        userLoggedIn: false } 
+      });
+    }
     this.getPageToDisplay();
-    return userIDFromChild;
   }
 
   getPageToDisplay = () => {
