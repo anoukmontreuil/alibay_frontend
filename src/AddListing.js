@@ -30,8 +30,8 @@ class AddListing extends Component {
     createListings = () => {
         // console.log(this.props.userID)
         getCreateListings(this.props.userID, this.itemPrice.value, this.itemBlurb.value)
-            .then(response => this.props.setListings(this.props.allListings.concat(response))
-            )
+            .then(response => {console.log(response); return this.props.setListings(this.props.allListings.concat({ seller: this.props.userID, price: this.itemPrice.value, blurb: this.itemBlurb.value }))
+            })
     }
 
     render = () => {

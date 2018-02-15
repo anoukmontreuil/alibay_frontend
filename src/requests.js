@@ -107,12 +107,5 @@ export function uploadFile(x) {
   fetch('/upics?ext=' + fileExtension, {
     method: "POST", 
     body: x
-<<<<<<< HEAD
-  }) 
-};
-    
-
-=======
   })
 }
->>>>>>> b41e4d1d82433df35720260380facee47a0289b7
