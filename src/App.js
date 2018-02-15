@@ -23,9 +23,8 @@ class App extends Component {
     super();
     this.state = {
       appMounted: false,
-      userLoggedIn: false,
-      userRegistered: true,
-      userID: undefined
+      displayLogin: true,
+      userID: null
     };
   };
 
@@ -33,17 +32,19 @@ class App extends Component {
     this.setState(st => { return { appMounted: true } });
     checkForExistingSession()
     .then(response => { 
-      // 'substring' only strips out the wrapping double quotes around the userID.
-      this.setState( st => { return { userID: response.substring(1, response.length - 2) } } ) 
-      } )
+      if (response !== "\"no cookies\"" ) {
+        // 'substring' below only strips out the double quotes wrapping a valid userID.
+        this.setState( st => { return { userID: response.substring(1, response.length - 1) } } ); 
+      }
+    });
   }
 
   showSignUp = () => {
-    this.setState(st => { return { userRegistered: false } });
+    this.setState(st => { return { displayLogin: false } });
   }
 
   showLogIn = () => {
-    this.setState(st => { return { userRegistered: true } });
+    this.setState(st => { return { displayLogin: true } });
   }
 
   wasInputValidated = (inputValidationWasSuccessful) => {
@@ -71,10 +72,38 @@ class App extends Component {
   }
 
   getPageToDisplay = () => {
+    // First, check whether the user has logged in before, and if so: return the app.
+    if (this.state.userID !== null) {
+      return (<Alibay userID={this.state.userID} />)
+    } 
+    // If no user has logged in before: display the login screen.
+    else if (this.state.displayLogin) {
+      return (
+        <div>
+          <Login ref={lgnfrm => this.loginForm = lgnfrm}
+            inputValidated={this.wasInputValidated}
+            loggedInUser={this.getUserID} />
+          <p>Not Registered? <button onClick={this.showSignUp}>Sign Up</button></p>
+        </div>
+      )
+    // If state 'displayLogin' is false: redirect the user to the registration page.
+    } else {
+      return (
+        <div>
+          <SignUp inputValidated={this.wasInputValidated} />
+          <p>Already Registered? <button onClick={this.showLogIn}>Log In</button></p>
+        </div>
+      )
+    }
+
+
+    // FORMER CODE BELOW...
+    /*
     if (this.state.userID !== undefined && this.state.userID !== "no cookie") {
       return (<Alibay userID={this.state.userID} />)
     }
-    if (this.state.userRegistered || this.state.userID !== undefined && this.state.userID === "no cookie") { // If user registered, show login page.
+    if (this.state.userRegistered 
+      || this.state.userID !== undefined && this.state.userID === "no cookie") { // If user registered, show login page.
       return (
         <div>
           <Login ref={lgnfrm => this.loginForm = lgnfrm}
@@ -91,6 +120,7 @@ class App extends Component {
         </div>
       )
     }
+    */
   }
 
   render = () => {
@@ -98,7 +128,7 @@ class App extends Component {
       <div className="App">
         <img className="Icon" src="AlibayIcon.gif" alt="Alibay" />
         <div>
-          {!this.state.appMounted ? null : this.getPageToDisplay() }
+          { this.state.appMounted ? this.getPageToDisplay() : null }
         </div>
       </div>
     );
