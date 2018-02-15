@@ -212,6 +212,8 @@ class Alibay extends Component {
         return this.setItemsSoldListing();
       case 'addListing':
         return this.setAddListing();
+        case 'searchListing':
+        return this.setSearchListing();
       default: this.setAllListings();
     }
     this.setState(st => { return { pageToDisplayInViewer: pageName } });
