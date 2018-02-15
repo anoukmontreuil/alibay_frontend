@@ -6,18 +6,19 @@ class ItemCard extends Component {
     super(props);
     this.state = {
       itemHasBeenPurchased: false,
-      buyerID: null
     }
   }
 
   purchaseItem = () => {
-    getPurchaseItem(this.props.buyer, this.props.seller, this.props.listingID)
-    this.setState(st => { return { itemHasBeenPurchased: true } });
+    getPurchaseItem(this.props.userID, this.props.listingID);
+      this.setState({ itemHasBeenPurchased: true });
   }
 
 
 
+
   render = () => {
+    console.log(this.props.userID, this.props.listingID, this.props.seller)
     return (
       <div className="FlexTopLeft">
         <div className="CardBody">
@@ -25,14 +26,18 @@ class ItemCard extends Component {
             price : {this.props.price}
           </div>
           <div className="FlexCenterLeft">
-          <button className="CardButton" onClick={this.purchaseItem}>Buy</button>
-        </div>
+            {this.state.itemHasBeenPurchased || this.props.userID === this.props.seller ?
+              null :
+              <button className="CardButton" onClick={this.purchaseItem}>Buy</button>
+            }
+            {this.state.itemHasBeenPurchased ? "Purchased For: " + this.props.price : "Price: " + this.props.price}
+          </div>
         </div>
         <div className="CardDescription">
           seller: {this.props.seller}
+        
           blurb: {this.props.blurb}
-          <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam non ullamcorper lacus. Aliquam augue elit, dictum ac magna nec, blandit hendrerit felis. Ut pretium, sapien nec venenatis cursus, urna eros.</div>
-        </div>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam non ullamcorper lacus. Aliquam augue elit, dictum ac magna nec, blandit hendrerit felis. Ut pretium, sapien nec venenatis cursus, urna eros.</div>
       </div>
     );
   }
