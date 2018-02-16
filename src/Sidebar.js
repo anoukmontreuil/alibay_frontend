@@ -4,9 +4,15 @@ class Sidebar extends Component {
   constructor(props) {
     super(props);
   }
+
+  logOut = () => {
+    this.props.logUserOut(true);
+  }
+
   displayAddListingPage = () => {
     this.props.pageToDisplayInViewer("addListing");
   }
+
   displayAllListingsPage = () => {
     this.props.pageToDisplayInViewer("allListings");
   }
@@ -22,6 +28,14 @@ class Sidebar extends Component {
   render = () => {
     return (
       <div className="Sidebar">
+        <button className="LogOutButton FullWidth" onClick={this.logOut}>Log Out</button>
+        <div className="FlexCenter">
+          <div className="SidebarSplitter"></div>
+          <div className="SidebarSplitter"></div>
+          <div className="SidebarSplitter"></div>
+          <div className="SidebarSplitter"></div>
+          <div className="SidebarSplitter"></div>
+        </div>
         <div>
           <div className="SidebarHeader">All Listings</div>
           <button onClick={this.displayAllListingsPage} className="FullWidth">View All Listings</button>
