@@ -145,8 +145,6 @@ class Alibay extends Component {
     });
   };
 
-
-
   setAllListings = () => {
     getAllListings(this.props.userID)
       .then(async listingIDs => {
@@ -210,8 +208,6 @@ class Alibay extends Component {
   setAddListing = () => {
     this.setState({ pageToDisplayInViewer: 'addListing' })
   }
-
-
 
   componentDidMount() {
     this.setAllListings();

@@ -35,7 +35,7 @@ export function logOff() {
   return fetch('/logout', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    credentials: 'include'
+    credentials: 'include',
   }).then(x => x.json())
   .then(y => console.log("Logging Out... ", y));
 }
@@ -112,12 +112,13 @@ export function checkForExistingSession() {
     .then(x => x.json())
 }
 
-export function uploadFile(x) {
-  var filename = x.name;
-  var fileExtension = filename.split('.').pop();
-  fetch('/uploadImages?ext=' + fileExtension, {
-    method: "POST",
-    body: x
+export function uploadFile(file) {
+  console.log("From requests.js:", file);
+  const filename = file.name;
+  const fileExtension = filename.split('.').pop(); // Splits on all dots, but returns (pop) the extension (last piece)
+  return fetch('/uploadedPictures?ext=' + fileExtension, {
+      method: "POST",
+      body: file
   })
 }
 
