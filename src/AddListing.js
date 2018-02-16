@@ -40,11 +40,10 @@ class AddListing extends Component {
     }
 
     uploadImg = img => {
-        console.log(img);
         uploadFile(img)
         .then(x => x.json())
         .then(y => {
-            this.setState( st => { return { uploadedPicturePath: y } } ); 
+            this.setState( st => { return { uploadedPicturePath: "http://localhost:4000/img/" + y } } ); 
         } );
       }
 
