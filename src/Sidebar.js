@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
+import { logOff } from './requests';
 
 class Sidebar extends Component {
-<<<<<<< HEAD
-=======
   constructor(props) {
     super(props);
   }
 
   logOut = () => {
+    logOff();
     this.props.logUserOut(true);
   }
->>>>>>> bf57be6c2feba41c437dd1335743f0f4982c77e1
 
   displayAddListingPage = () => {
     this.props.pageToDisplayInViewer("addListing");

@@ -31,6 +31,15 @@ export function login(username, password) {
     .then(x => { console.log(x); return x })
 };
 
+export function logOff() {
+  return fetch('/logout', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include'
+  }).then(x => x.json())
+  .then(y => console.log("Logging Out... ", y));
+}
+
 export function getItemsBoughtListings(uid) {
   console.log('getItemsBoughtListings', uid)
   return fetch('/allItemsBought?uid=' + uid)
@@ -106,7 +115,7 @@ export function checkForExistingSession() {
 export function uploadFile(x) {
   var filename = x.name;
   var fileExtension = filename.split('.').pop();
-  fetch('/upics?ext=' + fileExtension, {
+  fetch('/uploadImages?ext=' + fileExtension, {
     method: "POST",
     body: x
   })
