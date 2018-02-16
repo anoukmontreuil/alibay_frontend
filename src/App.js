@@ -79,7 +79,7 @@ class App extends Component {
     this.getPageToDisplay();
   }
 
-  checkForLogOut = (logOutStatusFromSideBar) => {
+  checkForLogOut = logOutStatusFromSideBar => {
     // console.log("LogOut Status From SideBar = ", logOutStatusFromSideBar);
     this.setState(st => { return { 
       userID: null,
@@ -96,7 +96,7 @@ class App extends Component {
                       logOut={this.checkForLogOut} />)
     } 
     // If state -> displayLogin is true: Login page is displayed.
-    if (this.state.displayLogin || this.state.userID === undefined ||  this.state.userID === null) {
+    if (this.state.displayLogin) {
       return (
         <div>
           <Login ref={lgnfrm => this.loginForm = lgnfrm}

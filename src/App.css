@@ -99,12 +99,14 @@ img {
 }
 
 .SubHeader {
-  background-color: #333;
+  background-color: #860;
+  border: #430 3px solid;
   border-radius: 4px;
   color: #FD6;
-  font-size: 1.1em;
+  font-size: 1.15em;
   font-weight: bold;
-  margin: 8px 4px;
+  padding: 4px;
+  margin: 4px 4px 4px 0px;
 }
 
 .Sidebar {
@@ -183,6 +185,7 @@ img {
   color: #333;
   font-size: 1.5em;
   font-weight: bold;
+  margin-bottom: 6px;
 }
 
 .ModalBody {
@@ -228,11 +231,16 @@ img {
   border-radius: 4px;
   background-color: #000;
   border: #111 3px solid;
-  margin: 4px;
+  margin: 4px 4px 4px 0px;
 }
 
 .PicturePlaceholder {
   width: 250px;
+  height: 250px;
+  border-radius: 4px;
+  background-color: #161616;
+  border: #111 3px solid;
+  margin: 4px 4px 4px 0px;
 }
 
 .AlignLeft {
