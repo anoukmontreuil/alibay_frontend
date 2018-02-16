@@ -18,7 +18,7 @@ class ItemCard extends Component {
 
   removeItem = () => {
     getRemovedItem(this.props.userID);
-    this.setState({cardVisible: false})
+    this.setState({ cardVisible: false })
   }
 
 
@@ -30,18 +30,18 @@ class ItemCard extends Component {
         <div className="FlexTopLeft">
           <div className="CardBody">
             <div className="CardPrice">
-
+              <img src={this.props.image} />
             </div>
             <div className="FlexCenterLeft">
               {this.state.itemHasBeenPurchased || this.props.userID === this.props.seller || this.props.appState === "itemsBought" ?
-              <button onClick={this.removeItem}>Remove item</button> :
+                <button onClick={this.removeItem}>Remove item</button> :
                 <button className="CardButton" onClick={this.purchaseItem}>Buy</button>}
               {this.state.itemHasBeenPurchased ? "Purchased For: " + this.props.price : "Price: " + this.props.price}
             </div>
             {/* <div>
               {this.props.userID === this.props.seller ? <button onClick={this.removeItem}>Remove item</button> : null}
             </div> */}
-            
+
           </div>
           <div className="CardDescription">
             seller: {this.props.seller}
@@ -55,7 +55,7 @@ class ItemCard extends Component {
         <div className="FlexTopLeft">
           <div className="CardBody">
             <div className="CardPrice">
-
+              <img src={this.props.image} />
             </div>
             <div className="FlexCenterLeft">
               <button onClick={this.removeItem}>Remove item</button>

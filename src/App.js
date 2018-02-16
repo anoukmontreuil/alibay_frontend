@@ -151,7 +151,7 @@ class Alibay extends Component {
       .then(async listingIDs => {
         const listingItems = await Promise.all(listingIDs.map(listingID => getItemDescription(listingID)));
 
-        // console.log(listingItems)
+        console.log(listingItems)
         // var tempListing = []
         // for (var i = 0; i < this.listings.length; i++) {
         //   console.log('test1')

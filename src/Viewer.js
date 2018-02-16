@@ -18,7 +18,8 @@ class Viewer extends Component {
             blurb={listing.blurb}
             buyer={listing.buyer}
             userID={this.props.userID}
-            appState={this.props.appState} />
+            appState={this.props.appState}
+            image={listing.imagePath} />
         </div>  
       );
       return (
@@ -36,7 +37,8 @@ class Viewer extends Component {
             blurb={listing.blurb}
             buyer={listing.buyer} 
             userID={this.props.userID}
-            appState={this.props.appState}/>
+            appState={this.props.appState}
+            image={listing.imagePath}/>
         </div>
       );
       return (
@@ -54,7 +56,8 @@ class Viewer extends Component {
             blurb={listing.blurb}
             buyer={listing.buyer} 
             userID={this.props.userID}
-            appState={this.props.appState}/>
+            appState={this.props.appState}
+            image={listing.imagePath}/>
         </div>
       );
       return (
