@@ -6,7 +6,7 @@ export function getAllListings() {
 export function signUp(username, password) {
   // NOTE: Password was hashed in the front-end prior to being passed as a parameter to this function.
   const bodyContents = JSON.stringify({ 'username': username, 'password': password });
-  console.log("The following object will be sent in the body of the POST request: " + bodyContents);
+  // console.log("The following object will be sent in the body of the POST request: " + bodyContents);
   return fetch('http://localhost:4000/signUp', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -19,7 +19,7 @@ export function signUp(username, password) {
 export function login(username, password) {
   // NOTE: Password was hashed in the front-end prior to being passed as a parameter to this function.
   const bodyContents = JSON.stringify({ 'username': username, 'password': password });
-  console.log("The following object will be sent in the body of the POST request: " + bodyContents);
+  // console.log("The following object will be sent in the body of the POST request: " + bodyContents);
   return fetch('/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -28,7 +28,7 @@ export function login(username, password) {
   }
    /*+ userID*/)
     .then(x => x.json())
-    .then(x => { console.log(x); return x })
+    // .then(x => { console.log(x); return x })
 };
 
 export function logOff() {
@@ -41,7 +41,7 @@ export function logOff() {
 }
 
 export function getItemsBoughtListings(uid) {
-  console.log('getItemsBoughtListings', uid)
+  // console.log('getItemsBoughtListings', uid)
   return fetch('/allItemsBought?uid=' + uid)
     .then(x => x.json());
 };
@@ -112,6 +112,17 @@ export function checkForExistingSession() {
     .then(x => x.json())
 }
 
+<<<<<<< HEAD
+// export function uploadFile(x) {
+//   var filename = x.name;
+//   var fileExtension = filename.split('.').pop();
+//   fetch('/upics?ext=' + fileExtension, {
+//     method: "POST",
+//     body: x
+//   })
+//   .then(x => console.log(x))
+// }
+=======
 export function uploadFile(file) {
   console.log("From requests.js:", file);
   const filename = file.name;
@@ -121,6 +132,7 @@ export function uploadFile(file) {
       body: file
   })
 }
+>>>>>>> bc3a619721e5bb7a6dca0b84eed762c708cea267
 
 export function getUsername(uid) {
   return fetch('/getUsername?uid=' + uid)

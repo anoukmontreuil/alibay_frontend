@@ -84,7 +84,7 @@ class Viewer extends Component {
   };
 
   render = () => {
-    console.log(this.listing)
+    // console.log(this.listing)
     return (
       <div className="Display">
         {this.getPageToDisplay()}
