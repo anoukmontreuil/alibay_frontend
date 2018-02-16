@@ -194,3 +194,17 @@ img {
   background-color: #555;
   color: #F66;
 }
+
+.ModalCloseButton {
+  font-family: "Webdings";
+  color: #F66;
+}
+
+.AddListingButton {
+  color: #9C6;
+}
+
+.SelectedPicturePreview {
+  max-width: 250px;
+  max-height: 250px;
+}
