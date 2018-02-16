@@ -19,7 +19,7 @@ class Viewer extends Component {
             buyer={listing.buyer}
             userID={this.props.userID}
             appState={this.props.appState} />
-        </div>
+        </div>  
       );
       return (
         <div>
