@@ -8,10 +8,10 @@ import {
   getPerformSearch,
   getPurchaseItem,
   getItemDescription,
-  checkForExistingSession
+  checkForExistingSession,
+  getUsername
 } from './requests';
 import Sidebar from './Sidebar';
-import Searchbar from './Searchbar';
 import Viewer from './Viewer';
 import ItemCard from './ItemCard';
 import AddListing from './AddListing';
@@ -31,12 +31,13 @@ class App extends Component {
   componentDidMount() {
     this.setState(st => { return { appMounted: true } });
     checkForExistingSession()
-    .then(response => { 
-      if (response !== "\"no cookies\"" ) {
-        // 'substring' below only strips out the double quotes wrapping a valid userID.
-        this.setState( st => { return { userID: response.substring(1, response.length - 1) } } ); 
-      }
-    });
+      .then(response => {
+        if (response !== "no cookies") {
+          console.log(response)
+          // 'substring' below only strips out the double quotes wrapping a valid userID.
+          this.setState(st => { return { userID: response } });
+        }
+      });
   }
 
   showSignUp = () => {
@@ -75,7 +76,7 @@ class App extends Component {
     // First, check whether the user has logged in before, and if so: return the app.
     if (this.state.userID !== null) {
       return (<Alibay userID={this.state.userID} />)
-    } 
+    }
     // If no user has logged in before: display the login screen.
     else if (this.state.displayLogin) {
       return (
@@ -86,7 +87,7 @@ class App extends Component {
           <p>Not Registered? <button onClick={this.showSignUp}>Sign Up</button></p>
         </div>
       )
-    // If state 'displayLogin' is false: redirect the user to the registration page.
+      // If state 'displayLogin' is false: redirect the user to the registration page.
     } else {
       return (
         <div>
@@ -128,7 +129,7 @@ class App extends Component {
       <div className="App">
         <img className="Icon" src="AlibayIcon.gif" alt="Alibay" />
         <div>
-          { this.state.appMounted ? this.getPageToDisplay() : null }
+          {this.state.appMounted ? this.getPageToDisplay() : null}
         </div>
       </div>
     );
@@ -150,6 +151,8 @@ class Alibay extends Component {
       pageToDisplayInViewer: "allListings"
     });
   };
+
+
 
   setAllListings = () => {
     getAllListings(this.props.userID)
@@ -182,12 +185,30 @@ class Alibay extends Component {
 
   setItemsSoldListing = () => {
     getItemsSoldListing(this.props.userID)
+      // .then(x => console.log(x, typeof(x)))
       .then(async listingIDs => {
         const listingSoldItems = await Promise.all(listingIDs.map(listingID => getItemDescription(listingID)));
         // console.log(listingSoldItems, this.props.userID)
         this.setState({ pageToDisplayInViewer: 'itemsSold', listings: listingSoldItems });
       });
   }
+
+  performSearch = () => {
+    getPerformSearch(this.searchBar.value)
+      // .then(x => JSON.parse(x))
+      // .then(x => console.log(x, typeof(x)))
+      // .then(x => JSON.parse(x))
+      .then(async listingIDs => {
+        const listingSearchItems = await Promise.all(listingIDs.map(listingID => getItemDescription(listingID)));
+        this.setState({ pageToDisplayInViewer: 'searchListing', listings: listingSearchItems });
+      });
+  }
+
+  // setUsername = () => {
+  //   getUsername(this.userID)
+  //     .then(x => console.log(x))
+  //   // this.setState({username: x})
+  // }
 
   setListings = (listings) => {
     this.setState({ listings })
@@ -196,6 +217,8 @@ class Alibay extends Component {
   setAddListing = () => {
     this.setState({ pageToDisplayInViewer: 'addListing' })
   }
+
+
 
   componentDidMount() {
     this.setAllListings();
@@ -212,8 +235,8 @@ class Alibay extends Component {
         return this.setItemsSoldListing();
       case 'addListing':
         return this.setAddListing();
-        case 'searchListing':
-        return this.setSearchListing();
+      case 'searchListing':
+        return this.performSearch();
       default: this.setAllListings();
     }
     this.setState(st => { return { pageToDisplayInViewer: pageName } });
@@ -233,14 +256,15 @@ class Alibay extends Component {
             <Sidebar pageToDisplayInViewer={this.setPageToDisplayInViewer} />
           </div>
           <div>
-            <Searchbar ref={sb => this.searchField = sb} pageToDisplayInViewer={this.setPageToDisplayInViewer} />
+            <input ref={sb => this.searchBar = sb} className="Searchbar" placeholder="Find items for sale" />
+            <button onClick={this.performSearch}>Search</button>
             <Viewer ref={pdm => this.pageViewer = pdm}
               pageToDisplay={this.state.pageToDisplayInViewer}
               allListings={this.state.listings}
               setListings={this.setListings}
               itemsBought={this.state.listings}
               itemsSold={this.state.listings}
-              userID={this.props.userID} 
+              userID={this.props.userID}
               appState={this.state.pageToDisplayInViewer} />
           </div>
         </div>

@@ -5,7 +5,7 @@ export function getAllListings() {
 
 export function signUp(username, password) {
   // NOTE: Password was hashed in the front-end prior to being passed as a parameter to this function.
-  const bodyContents = JSON.stringify({'username': username, 'password': password});
+  const bodyContents = JSON.stringify({ 'username': username, 'password': password });
   console.log("The following object will be sent in the body of the POST request: " + bodyContents);
   return fetch('http://localhost:4000/signUp', {
     method: 'POST',
@@ -18,7 +18,7 @@ export function signUp(username, password) {
 
 export function login(username, password) {
   // NOTE: Password was hashed in the front-end prior to being passed as a parameter to this function.
-  const bodyContents = JSON.stringify({'username': username, 'password': password});
+  const bodyContents = JSON.stringify({ 'username': username, 'password': password });
   console.log("The following object will be sent in the body of the POST request: " + bodyContents);
   return fetch('/login', {
     method: 'POST',
@@ -27,10 +27,12 @@ export function login(username, password) {
     body: bodyContents
   }
    /*+ userID*/)
-  .then(x => x.text())
+    .then(x => x.json())
+    .then(x => { console.log(x); return x })
 };
 
 export function getItemsBoughtListings(uid) {
+  console.log('getItemsBoughtListings', uid)
   return fetch('/allItemsBought?uid=' + uid)
     .then(x => x.json());
 };
@@ -46,11 +48,11 @@ export function getCreateListings(sellerID, price, blurb) {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ 
+    body: JSON.stringify({
       sellerID: sellerID,
       price: price,
-      blurb: blurb 
-     })
+      blurb: blurb
+    })
   })
     .then(x => x.json())
 };
@@ -65,7 +67,7 @@ export function getPerformSearch(searchTerm) {
       searchTerm: searchTerm
     })
   })
-    .then(x => x.text());
+    .then(x => x.json());
 };
 
 export function getPurchaseItem(buyerID, listingID) {
@@ -98,14 +100,19 @@ export function checkForExistingSession() {
   return fetch('/check', {
     credentials: "same-origin"
   })
-  .then(x => x.text())
+    .then(x => x.json())
 }
 
 export function uploadFile(x) {
   var filename = x.name;
   var fileExtension = filename.split('.').pop();
   fetch('/upics?ext=' + fileExtension, {
-    method: "POST", 
+    method: "POST",
     body: x
   })
+}
+
+export function getUsername(uid) {
+  return fetch('/getUsername?uid=' + uid)
+    .then(x => x.json())
 }

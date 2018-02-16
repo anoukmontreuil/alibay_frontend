@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { getCreateListings } from './requests';
-import App from './App'
 
 class AddListing extends Component {
     constructor(props) {

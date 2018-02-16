@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ItemCard from './ItemCard';
-import AddListing from './AddListing'
+
 
 class Viewer extends Component {
   constructor(props) {
@@ -14,7 +14,7 @@ class Viewer extends Component {
         <div key={idx}>
           <ItemCard price={listing.price}
             listingID={listing.listingID}
-            seller={listing.seller}
+            seller={(listing.seller)}
             blurb={listing.blurb}
             buyer={listing.buyer}
             userID={this.props.userID}
@@ -63,10 +63,28 @@ class Viewer extends Component {
         </div>
       );
     };
+    if (nameOfPageToDisplay === "searchListing") {
+      var itemsSoldMap = this.props.itemsSold.map((listing, idx) =>
+        <div key={idx}>
+          <ItemCard price={listing.price}
+            listingID={listing.listingID}
+            seller={listing.seller}
+            blurb={listing.blurb}
+            buyer={listing.buyer} 
+            userID={this.props.userID}
+            appState={this.props.appState}/>
+        </div>
+      );
+      return (
+        <div>
+          {itemsSoldMap}
+        </div>
+      );
+    };
   };
 
   render = () => {
-    console.log(this.props.appState)
+    console.log(this.listing)
     return (
       <div className="Display">
         {this.getPageToDisplay()}

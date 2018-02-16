@@ -18,7 +18,7 @@ class ItemCard extends Component {
 
 
   render = () => {
-    console.log(this.props.userID, this.props.listingID, this.props.seller, this.props.appState)
+    console.log(this.props.userID, typeof(this.props.userID), this.props.listingID, this.props.seller, typeof(this.props.seller), this.props.appState)
     if (this.props.appState !== "itemsBought") {
       return (
         <div className="FlexTopLeft">
@@ -27,7 +27,7 @@ class ItemCard extends Component {
               
             </div>
             <div className="FlexCenterLeft">
-              {this.state.itemHasBeenPurchased || this.props.userID === this.props.seller ?
+              {this.state.itemHasBeenPurchased || this.props.userID === this.props.seller || this.props.appState === "itemsBought"?
                 null :
                 <button className="CardButton" onClick={this.purchaseItem}>Buy</button>
               }
