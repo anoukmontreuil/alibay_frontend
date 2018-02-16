@@ -9,7 +9,8 @@ import {
   getPurchaseItem,
   getItemDescription,
   checkForExistingSession,
-  getUsername
+  getUsername,
+  getItemsToSell
 } from './requests';
 import Sidebar from './Sidebar';
 import Viewer from './Viewer';
@@ -29,28 +30,36 @@ class App extends Component {
 
   componentDidMount() {
     checkForExistingSession()
-    .then(response => { 
-      if (response !== "no cookies") {
-        this.setState( st => { return { 
-          userID: response, 
-          displayLogin: false
-        } } );
+      .then(response => {
+        if (response !== "no cookies") {
+          this.setState(st => {
+            return {
+              userID: response,
+              displayLogin: false
+            }
+          });
 
+        }
+      });
+  }
+
+  showSignUp = () => {
+    this.setState(st => {
+      return {
+        displayLogin: false,
+        userID: null,
+        loggedOut: true
       }
     });
   }
 
-  showSignUp = () => {
-    this.setState(st => { return { 
-      displayLogin: false, 
-      userID: null, 
-      loggedOut: true } });
-  }
-
   showLogIn = () => {
-    this.setState(st => { return { 
-      displayLogin: true, 
-      loggedOut: true } });
+    this.setState(st => {
+      return {
+        displayLogin: true,
+        loggedOut: true
+      }
+    });
   }
 
   wasInputValidated = (inputValidationWasSuccessful) => {
@@ -81,20 +90,22 @@ class App extends Component {
 
   checkForLogOut = logOutStatusFromSideBar => {
     // console.log("LogOut Status From SideBar = ", logOutStatusFromSideBar);
-    this.setState(st => { return { 
-      userID: null,
-      displayLogin: true, 
-      loggedOut: logOutStatusFromSideBar
-    } } );
+    this.setState(st => {
+      return {
+        userID: null,
+        displayLogin: true,
+        loggedOut: logOutStatusFromSideBar
+      }
+    });
   }
 
   getPageToDisplay = () => {
     // If the userID is not null, redirect them to the application.
     if (this.state.userID !== null && !this.state.loggedOut) {
-      return (<Alibay ref={alb => this.alibayApp = alb} 
-                      userID={this.state.userID}
-                      logOut={this.checkForLogOut} />)
-    } 
+      return (<Alibay ref={alb => this.alibayApp = alb}
+        userID={this.state.userID}
+        logOut={this.checkForLogOut} />)
+    }
     // If state -> displayLogin is true: Login page is displayed.
     if (this.state.displayLogin) {
       return (
@@ -122,7 +133,7 @@ class App extends Component {
       <div className="App">
         <img className="Icon" src="AlibayIcon.gif" alt="Alibay" />
         <div>
-          { this.getPageToDisplay() }
+          {this.getPageToDisplay()}
         </div>
       </div>
     );
@@ -132,10 +143,11 @@ class App extends Component {
 class Alibay extends Component {
   constructor(props) {
     super(props);
-    this.state = { 
-      pageToDisplayInViewer: "allListings", 
-      listings: [], 
-      logUserOut: false }
+    this.state = {
+      pageToDisplayInViewer: "allListings",
+      listings: [],
+      logUserOut: false
+    }
     this.handler = this.handler.bind(this)
   }
 
@@ -164,6 +176,15 @@ class Alibay extends Component {
         // })
         // console.log(tempListing)
         this.setState({ pageToDisplayInViewer: 'allListings', listings: listingItems })
+      });
+  };
+
+  setItemsToSell = () => {
+    getItemsToSell(this.props.userID)
+      .then(async listingIDs => {
+        const listingItemsToSell = await Promise.all(listingIDs.map(listingID => getItemDescription(listingID)));
+        console.log(listingItemsToSell, this.props.userID)
+        this.setState({ pageToDisplayInViewer: 'itemsToSell', listings: listingItemsToSell })
       });
   };
 
@@ -226,6 +247,8 @@ class Alibay extends Component {
         return this.setAddListing();
       case 'searchListing':
         return this.performSearch();
+      case 'itemsToSell':
+        return this.setItemsToSell();
       default: this.setAllListings();
     }
     this.setState(st => { return { pageToDisplayInViewer: pageName } });
@@ -247,9 +270,9 @@ class Alibay extends Component {
       return (
         <div className="FlexCenter">
           <div>
-            <Sidebar 
-              pageToDisplayInViewer={this.setPageToDisplayInViewer} 
-              logUserOut={this.handleLogOut}/>
+            <Sidebar
+              pageToDisplayInViewer={this.setPageToDisplayInViewer}
+              logUserOut={this.handleLogOut} />
           </div>
           <div>
             <input ref={sb => this.searchBar = sb} className="Searchbar" placeholder="Find items for sale" />
@@ -261,6 +284,7 @@ class Alibay extends Component {
               itemsBought={this.state.listings}
               itemsSold={this.state.listings}
               userID={this.props.userID}
+              itemsToSell={this.state.listings}
               appState={this.state.pageToDisplayInViewer} />
           </div>
         </div>

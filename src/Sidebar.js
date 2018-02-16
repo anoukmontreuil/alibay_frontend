@@ -27,6 +27,10 @@ class Sidebar extends Component {
     this.props.pageToDisplayInViewer("itemsSold");
   }
 
+  displayItemsToSellPage = () => {
+    this.props.pageToDisplayInViewer("itemsToSell");
+  }
+
   render = () => {
     return (
       <div className="Sidebar">
@@ -52,6 +56,7 @@ class Sidebar extends Component {
         <div>
           <div className="SidebarHeader">Buyer Mode</div>
           <button onClick={this.displayItemsBoughtPage} className="FullWidth">View Items Purchased</button>
+          <button onClick={this.displayItemsToSellPage} className="FullWidth">View Items Put to Sell</button>
         </div>
         <div className="FlexCenter">
           <div className="SidebarSplitter"></div>

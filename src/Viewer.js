@@ -69,8 +69,28 @@ class Viewer extends Component {
         </div>
       );
     };
+    if (nameOfPageToDisplay === "itemsToSell") {
+      var itemsToSellMap = this.props.itemsToSell.map((listing, idx) =>
+        <div key={idx}>
+          <ItemCard price={listing.price}
+            listingID={listing.listingID}
+            seller={listing.seller}
+            blurb={listing.blurb}
+            buyer={listing.buyer} 
+            userID={this.props.userID}
+            appState={this.props.appState}
+            description={listing.description}
+            image={listing.imagePath}/>
+        </div>
+      );
+      return (
+        <div>
+          {itemsToSellMap}
+        </div>
+      );
+    };
     if (nameOfPageToDisplay === "searchListing") {
-      var itemsSoldMap = this.props.itemsSold.map((listing, idx) =>
+      var itemsSearchMap = this.props.itemsSearchMap.map((listing, idx) =>
         <div key={idx}>
           <ItemCard price={listing.price}
             listingID={listing.listingID}
@@ -84,7 +104,7 @@ class Viewer extends Component {
       );
       return (
         <div>
-          {itemsSoldMap}
+          {itemsSearchMap}
         </div>
       );
     };

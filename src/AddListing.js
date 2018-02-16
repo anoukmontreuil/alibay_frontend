@@ -17,10 +17,10 @@ class AddListing extends Component {
         if (this.itemPrice.value.length > 0) {
             priceToNumber = parseInt(this.itemPrice.value, 10);
         }
-        if (this.itemTitle.value.length > 0
+        if (this.itemBlurb.value.length > 0
             && this.itemPrice.value.length > 0
             && priceToNumber > -1
-            && this.itemBlurb.value.length > 0) {
+            && this.itemDescription.value.length > 0) {
             this.setState(st => { return { postingValidated: true } });
         } else {
             this.setState(st => { return { postingValidated: false } });
@@ -29,14 +29,14 @@ class AddListing extends Component {
 
     createListings = () => {
         // console.log(this.props.userID)
-        getCreateListings(this.props.userID, this.itemPrice.value, this.itemBlurb.value, this.state.uploadedPicturePath)
+        getCreateListings(this.props.userID, this.itemPrice.value, this.itemBlurb.value, this.state.uploadedPicturePath, this.itemDescription.value)
             .then(response => {
                 this.props.setListings(this.props.allListings.concat({ 
                     seller: this.props.userID, 
                     price: this.itemPrice.value, 
                     blurb: this.itemBlurb.value,
-                    description: this.itemDescription,
-                    picturePath: this.state.uploadedPicturePath
+                    picturePath: this.state.uploadedPicturePath,
+                    description: this.itemDescription.value
                  }))
             })
     }

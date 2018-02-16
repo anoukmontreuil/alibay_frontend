@@ -3,6 +3,12 @@ export function getAllListings(uid) {
     .then(x => x.json());
 }
 
+export function getItemsToSell(uid) {
+  return fetch('/itemsToSell?uid=' + uid)
+    .then(x => x.json());
+}
+
+
 export function signUp(username, password) {
   // NOTE: Password was hashed in the front-end prior to being passed as a parameter to this function.
   const bodyContents = JSON.stringify({ 'username': username, 'password': password });
@@ -51,7 +57,7 @@ export function getItemsSoldListing(uid) {
     .then(x => x.json());
 };
 
-export function getCreateListings(sellerID, price, blurb, description, picturePath) {
+export function getCreateListings(sellerID, price, blurb, picturePath, description) {
   return fetch('/createListing', {
     method: 'POST',
     headers: {
@@ -61,11 +67,12 @@ export function getCreateListings(sellerID, price, blurb, description, picturePa
       sellerID: sellerID,
       price: price,
       blurb: blurb,
-      description: description,
-      picturePath: picturePath
+      picturePath: picturePath,
+      description: description
     })
   })
     .then(x => x.json())
+    .then(x => console.log(x))
 };
 
 export function getPerformSearch(searchTerm) {
