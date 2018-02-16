@@ -19,6 +19,7 @@ class Viewer extends Component {
             buyer={listing.buyer}
             userID={this.props.userID}
             appState={this.props.appState}
+            description={listing.description}
             image={listing.imagePath} />
         </div>  
       );
@@ -38,6 +39,7 @@ class Viewer extends Component {
             buyer={listing.buyer} 
             userID={this.props.userID}
             appState={this.props.appState}
+            description={listing.description}
             image={listing.imagePath}/>
         </div>
       );
@@ -57,6 +59,7 @@ class Viewer extends Component {
             buyer={listing.buyer} 
             userID={this.props.userID}
             appState={this.props.appState}
+            description={listing.description}
             image={listing.imagePath}/>
         </div>
       );
@@ -75,6 +78,7 @@ class Viewer extends Component {
             blurb={listing.blurb}
             buyer={listing.buyer} 
             userID={this.props.userID}
+            description={listing.description}
             appState={this.props.appState}/>
         </div>
       );

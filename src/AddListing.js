@@ -35,6 +35,7 @@ class AddListing extends Component {
                     seller: this.props.userID, 
                     price: this.itemPrice.value, 
                     blurb: this.itemBlurb.value,
+                    description: this.itemDescription,
                     picturePath: this.state.uploadedPicturePath
                  }))
             })
@@ -68,11 +69,11 @@ class AddListing extends Component {
                                     <input type="file" accept="image/*" onChange={e => this.uploadImg(e.target.files[0])} /> 
                                 </div>
                                 <div className="BlockTopLeft">
-                                    <input ref={it => this.itemTitle = it} onChange={this.validatePosting} placeholder="Name of item" maxLength="140" className="NameField" />
+                                    <input ref={it => this.itemBlurb = it} onChange={this.validatePosting} placeholder="Name of item" maxLength="140" className="NameField" />
                                     <input ref={ip => this.itemPrice = ip} onChange={this.validatePosting} placeholder="Price" maxLength="10" className="PriceField" />
                                 </div>
                                 <div className="BlockTopLeft">
-                                    <textarea ref={ib => this.itemBlurb = ib} placeholder="Item description" rows="5" cols="51" maxLength="4096" />
+                                    <textarea ref={ib => this.itemDescription = ib} placeholder="Item description" rows="5" cols="51" maxLength="4096" />
                                 </div>
                                 <div>
                                     <button className="AddListingButton" onClick={this.createListings}>Add Listing</button>

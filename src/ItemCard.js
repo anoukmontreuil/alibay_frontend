@@ -16,12 +16,12 @@ class ItemCard extends Component {
   }
 
 
-  removeItem = () => {
-    getRemovedItem(this.props.userID);
-    this.setState({ cardVisible: false })
-  }
+  // removeItem = () => {
+  //   getRemovedItem(this.props.userID);
+  //   this.setState({ cardVisible: false })
+  // }
 
-
+/* <button onClick={this.removeItem}>Remove item</button> : */
 
   render = () => {
     // console.log(this.props.listing, this.props.userID, this.props.seller, this.props.appState, this.props.buyer)
@@ -34,7 +34,7 @@ class ItemCard extends Component {
             </div>
             <div className="FlexCenterLeft">
               {this.state.itemHasBeenPurchased || this.props.userID === this.props.seller || this.props.appState === "itemsBought" ?
-                <button onClick={this.removeItem}>Remove item</button> :
+                 null :
                 <button className="CardButton" onClick={this.purchaseItem}>Buy</button>}
               {this.state.itemHasBeenPurchased ? "Purchased For: " + this.props.price : "Price: " + this.props.price}
             </div>
@@ -43,11 +43,14 @@ class ItemCard extends Component {
             </div> */}
 
           </div>
-          <div className="CardDescription">
-            seller: {this.props.seller}
 
-            blurb: {this.props.blurb}
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam non ullamcorper lacus. Aliquam augue elit, dictum ac magna nec, blandit hendrerit felis. Ut pretium, sapien nec venenatis cursus, urna eros.</div>
+          <div className="CardDescription">
+            <div>
+              seller: {this.props.seller}
+              blurb: {this.props.blurb}
+            </div>
+            description : {this.props.description}
+          </div>
         </div>
       );
     } else if (this.state.cardVisible === true) {
@@ -61,10 +64,14 @@ class ItemCard extends Component {
               <button onClick={this.removeItem}>Remove item</button>
             </div>
           </div>
+
           <div className="CardDescription">
-            seller: {this.props.seller}
-            blurb: {this.props.blurb}
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam non ullamcorper lacus. Aliquam augue elit, dictum ac magna nec, blandit hendrerit felis. Ut pretium, sapien nec venenatis cursus, urna eros.</div>
+            <div>
+              seller: {this.props.seller}
+              blurb: {this.props.blurb}
+            </div>
+            description : {this.props.description}
+          </div>
         </div>
       );
     }

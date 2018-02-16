@@ -51,7 +51,7 @@ export function getItemsSoldListing(uid) {
     .then(x => x.json());
 };
 
-export function getCreateListings(sellerID, price, blurb, picturePath) {
+export function getCreateListings(sellerID, price, blurb, description, picturePath) {
   return fetch('/createListing', {
     method: 'POST',
     headers: {
@@ -61,6 +61,7 @@ export function getCreateListings(sellerID, price, blurb, picturePath) {
       sellerID: sellerID,
       price: price,
       blurb: blurb,
+      description: description,
       picturePath: picturePath
     })
   })
@@ -128,7 +129,7 @@ export function getUsername(uid) {
     .then(x => x.json())
 }
 
-export function getRemovedItem(uid) {
-  return fetch('/removedItems?uid=' + uid)
-  .then(x => x.json());
-}
+// export function getRemovedItem(uid) {
+//   return fetch('/removedItems?uid=' + uid)
+//   .then(x => x.json());
+// }
