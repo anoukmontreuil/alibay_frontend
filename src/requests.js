@@ -51,7 +51,7 @@ export function getItemsSoldListing(uid) {
     .then(x => x.json());
 };
 
-export function getCreateListings(sellerID, price, blurb) {
+export function getCreateListings(sellerID, price, blurb, picturePath) {
   return fetch('/createListing', {
     method: 'POST',
     headers: {
@@ -60,7 +60,8 @@ export function getCreateListings(sellerID, price, blurb) {
     body: JSON.stringify({
       sellerID: sellerID,
       price: price,
-      blurb: blurb
+      blurb: blurb,
+      picturePath: picturePath
     })
   })
     .then(x => x.json())
