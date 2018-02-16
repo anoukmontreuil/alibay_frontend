@@ -23,29 +23,34 @@ class App extends Component {
     super();
     this.state = {
       displayLogin: true,
-      userID: null,
+      userID: null
     };
   };
 
   componentDidMount() {
     checkForExistingSession()
     .then(response => { 
-      if (response !== "\"no cookies\"" ) {
+      if (response !== "\"no cookies\"") {
         // 'substring' below only strips out the double quotes wrapping a valid userID.
         this.setState( st => { return { 
           userID: response.substring(1, response.length - 1), 
-          displayLogin: false 
+          displayLogin: false,
         } } );
       }
     });
   }
 
   showSignUp = () => {
-    this.setState(st => { return { displayLogin: false } });
+    this.setState(st => { return { 
+      displayLogin: false, 
+      userID: null, 
+      loggedOut: true } });
   }
 
   showLogIn = () => {
-    this.setState(st => { return { displayLogin: true } });
+    this.setState(st => { return { 
+      displayLogin: true, 
+      loggedOut: true } });
   }
 
   wasInputValidated = (inputValidationWasSuccessful) => {
@@ -58,36 +63,40 @@ class App extends Component {
       this.setState(st => {
         return {
           userID: userIDFromChild,
-          displayLogin: false
+          displayLogin: false,
+          loggedOut: false
         }
       });
     } else {
       this.setState(st => {
         return {
           userID: undefined,
-          displayLogin: true
+          displayLogin: true,
+          loggedOut: true
         }
       });
     }
     this.getPageToDisplay();
   }
 
-  checkForLogOut = logOutPropFromSideBar => {
+  checkForLogOut = (logOutStatusFromSideBar) => {
+    console.log("LogOut Status From SideBar = ", logOutStatusFromSideBar);
     this.setState(st => { return { 
       userID: null,
-      displayLogin: true 
+      displayLogin: true, 
+      loggedOut: logOutStatusFromSideBar
     } } );
   }
 
   getPageToDisplay = () => {
     // If the userID is not null, redirect them to the application.
-    if (this.state.userID !== null) {
+    if (this.state.userID !== null && !this.state.loggedOut) {
       return (<Alibay ref={alb => this.alibayApp = alb} 
                       userID={this.state.userID}
                       logOut={this.checkForLogOut} />)
     } 
     // If state -> displayLogin is true: Login page is displayed.
-    if (this.state.displayLogin) {
+    if (this.state.displayLogin || this.state.userID !== null) {
       return (
         <div>
           <Login ref={lgnfrm => this.loginForm = lgnfrm}
@@ -98,7 +107,7 @@ class App extends Component {
       )
     }
     // If state -> displayLogin is false: Registration page is displayed.
-    if (!this.state.displayLogin) {
+    if (!this.state.displayLogin && this.state.userID === null) {
       return (
         <div>
           <SignUp inputValidated={this.wasInputValidated} />
@@ -205,7 +214,7 @@ class Alibay extends Component {
   }
 
   handleLogOut = logOutPropFromSideBar => {
-    this.props.logOut();
+    this.props.logOut(true);
     this.setState(st => { return { logUserOut: true } });
   }
 
