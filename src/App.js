@@ -22,63 +22,81 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      appMounted: false,
       displayLogin: true,
       userID: null
     };
   };
 
   componentDidMount() {
-    this.setState(st => { return { appMounted: true } });
     checkForExistingSession()
-      .then(response => {
-        if (response !== "no cookies") {
-          console.log(response)
-          // 'substring' below only strips out the double quotes wrapping a valid userID.
-          this.setState(st => { return { userID: response } });
-        }
-      });
+    .then(response => { 
+      if (response !== "no cookies") {
+        // 'substring' below only strips out the double quotes wrapping a valid userID.
+        this.setState( st => { return { 
+          userID: response, 
+          displayLogin: false
+        } } );
+      }
+    });
   }
 
   showSignUp = () => {
-    this.setState(st => { return { displayLogin: false } });
+    this.setState(st => { return { 
+      displayLogin: false, 
+      userID: null, 
+      loggedOut: true } });
   }
 
   showLogIn = () => {
-    this.setState(st => { return { displayLogin: true } });
+    this.setState(st => { return { 
+      displayLogin: true, 
+      loggedOut: true } });
   }
 
   wasInputValidated = (inputValidationWasSuccessful) => {
     return inputValidationWasSuccessful;
   }
 
-  getUserID = (userIDFromChild) => {
+  getUserID = userIDFromChild => {
     if (userIDFromChild !== "\"Login Failed\""
       && userIDFromChild !== "\"fail\"") {
       this.setState(st => {
         return {
           userID: userIDFromChild,
-          userLoggedIn: true
+          displayLogin: false,
+          loggedOut: false
         }
       });
     } else {
       this.setState(st => {
         return {
           userID: undefined,
-          userLoggedIn: false
+          displayLogin: true,
+          loggedOut: true
         }
       });
     }
     this.getPageToDisplay();
   }
 
+  checkForLogOut = (logOutStatusFromSideBar) => {
+    console.log("LogOut Status From SideBar = ", logOutStatusFromSideBar);
+    this.setState(st => { return { 
+      userID: null,
+      displayLogin: true, 
+      loggedOut: logOutStatusFromSideBar
+    } } );
+  }
+
   getPageToDisplay = () => {
-    // First, check whether the user has logged in before, and if so: return the app.
-    if (this.state.userID !== null) {
-      return (<Alibay userID={this.state.userID} />)
-    }
-    // If no user has logged in before: display the login screen.
-    else if (this.state.displayLogin) {
+    // If the userID is not null, redirect them to the application.
+    if (this.state.userID !== null && !this.state.loggedOut) {
+      return (<Alibay ref={alb => this.alibayApp = alb} 
+                      userID={this.state.userID}
+                      logOut={this.checkForLogOut} />)
+    } 
+    // If state -> displayLogin is true: Login page is displayed.
+    if (this.state.displayLogin || this.state.userID !== null) {
       return (
         <div>
           <Login ref={lgnfrm => this.loginForm = lgnfrm}
@@ -87,8 +105,9 @@ class App extends Component {
           <p>Not Registered? <button onClick={this.showSignUp}>Sign Up</button></p>
         </div>
       )
-      // If state 'displayLogin' is false: redirect the user to the registration page.
-    } else {
+    }
+    // If state -> displayLogin is false: Registration page is displayed.
+    if (!this.state.displayLogin && this.state.userID === null) {
       return (
         <div>
           <SignUp inputValidated={this.wasInputValidated} />
@@ -96,32 +115,6 @@ class App extends Component {
         </div>
       )
     }
-
-
-    // FORMER CODE BELOW...
-    /*
-    if (this.state.userID !== undefined && this.state.userID !== "no cookie") {
-      return (<Alibay userID={this.state.userID} />)
-    }
-    if (this.state.userRegistered 
-      || this.state.userID !== undefined && this.state.userID === "no cookie") { // If user registered, show login page.
-      return (
-        <div>
-          <Login ref={lgnfrm => this.loginForm = lgnfrm}
-            inputValidated={this.wasInputValidated}
-            loggedInUser={this.getUserID} />
-          <p>Not Registered? <button onClick={this.showSignUp}>Sign Up</button></p>
-        </div>
-      )
-    } else { // If user not registered, show signup page.
-      return (
-        <div>
-          <SignUp inputValidated={this.wasInputValidated} />
-          <p>Already Registered? <button onClick={this.showLogIn}>Log In</button></p>
-        </div>
-      )
-    }
-    */
   }
 
   render = () => {
@@ -129,19 +122,20 @@ class App extends Component {
       <div className="App">
         <img className="Icon" src="AlibayIcon.gif" alt="Alibay" />
         <div>
-          {this.state.appMounted ? this.getPageToDisplay() : null}
+          { this.getPageToDisplay() }
         </div>
       </div>
     );
   }
 }
 
-
-
 class Alibay extends Component {
   constructor(props) {
     super(props);
-    this.state = { pageToDisplayInViewer: "allListings", listings: [] }
+    this.state = { 
+      pageToDisplayInViewer: "allListings", 
+      listings: [], 
+      logUserOut: false }
     this.handler = this.handler.bind(this)
   }
 
@@ -224,7 +218,6 @@ class Alibay extends Component {
     this.setAllListings();
   }
 
-
   setPageToDisplayInViewer = pageName => {
     switch (pageName) {
       case 'allListings':
@@ -242,6 +235,11 @@ class Alibay extends Component {
     this.setState(st => { return { pageToDisplayInViewer: pageName } });
   }
 
+  handleLogOut = logOutPropFromSideBar => {
+    this.props.logOut(true);
+    this.setState(st => { return { logUserOut: true } });
+  }
+
   render = () => {
     // console.log('app state', this.state)
     if (this.state.pageToDisplayInViewer === "addListing") {
@@ -253,7 +251,7 @@ class Alibay extends Component {
       return (
         <div className="FlexCenter">
           <div>
-            <Sidebar pageToDisplayInViewer={this.setPageToDisplayInViewer} />
+            <Sidebar pageToDisplayInViewer={this.setPageToDisplayInViewer} logUserOut={this.handleLogOut}/>
           </div>
           <div>
             <input ref={sb => this.searchBar = sb} className="Searchbar" placeholder="Find items for sale" />

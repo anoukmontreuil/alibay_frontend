@@ -118,6 +118,7 @@ img {
 
 .Searchbar {
   width: 100%;
+  margin:4px 4px 4px 4px;
 }
 
 .Display {
@@ -187,4 +188,23 @@ img {
   border-radius: 4px;
   color: #888;
   font-weight: bold;  
+}
+
+.LogOutButton {
+  background-color: #555;
+  color: #F66;
+}
+
+.ModalCloseButton {
+  font-family: "Webdings";
+  color: #F66;
+}
+
+.AddListingButton {
+  color: #9C6;
+}
+
+.SelectedPicturePreview {
+  max-width: 250px;
+  max-height: 250px;
 }
