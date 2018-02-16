@@ -20,8 +20,7 @@ class AddListing extends Component {
         if (this.itemTitle.value.length > 0
             && this.itemPrice.value.length > 0
             && priceToNumber > -1
-            && this.itemBlurb.value.length > 0
-        ) {
+            && this.itemBlurb.value.length > 0) {
             this.setState(st => { return { postingValidated: true } });
         } else {
             this.setState(st => { return { postingValidated: false } });
@@ -30,12 +29,14 @@ class AddListing extends Component {
 
     createListings = () => {
         // console.log(this.props.userID)
-        getCreateListings(this.props.userID, this.itemPrice.value, this.itemBlurb.value)
+        getCreateListings(this.props.userID, this.itemPrice.value, this.itemBlurb.value, this.state.uploadedPicturePath)
             .then(response => {
                 this.props.setListings(this.props.allListings.concat({ 
                     seller: this.props.userID, 
                     price: this.itemPrice.value, 
-                    blurb: this.itemBlurb.value }))
+                    blurb: this.itemBlurb.value,
+                    picturePath: this.state.uploadedPicturePath
+                 }))
             })
     }
 
@@ -52,11 +53,16 @@ class AddListing extends Component {
         return (
             <div className="ModalBackground">
                 <div className="ModalWindow">
-                    <div className="ModalTitleBar">Add A Listing</div>
-                    <div><button onClick={this.props.handler}> <span className="ModalCloseButton">r</span> </button></div>
+                    <div className="ModalTitleBar FlexCenterLeft">
+                        <div className="AlignLeft FullWidth">Add A Listing</div>
+                        <div className="AlignRight FullWidth"><button onClick={this.props.handler}> <span className="ModalCloseButton">r</span> </button></div>
+                    </div>
                     <div className="ModalBody">
                         <div className="FlexTopLeft">
-                            <div>{this.state.uploadedPicturePath !== null ? <div><p><strong>Selected Picture</strong></p><img className="SelectedPicturePreview" src={this.state.uploadedPicturePath} alt="Selected Picture"/></div> : null }</div>
+                            <div className="BlockCenter">
+                                <div className="SubHeader">Picture Preview</div>
+                                <div>{this.state.uploadedPicturePath !== null ? <div><img className="SelectedPicturePreview" src={this.state.uploadedPicturePath} alt="Selected Picture"/></div> : <div className="PicturePlaceholder"></div> }</div>
+                            </div>
                             <div>
                                 <div className="BlockTopLeft">
                                     <input type="file" accept="image/*" onChange={e => this.uploadImg(e.target.files[0])} /> 
@@ -70,6 +76,7 @@ class AddListing extends Component {
                                 </div>
                                 <div>
                                     <button className="AddListingButton" onClick={this.createListings}>Add Listing</button>
+                                    <button className="ModalCancelButton" onClick={this.props.handler}>Cancel</button>
                                 </div>
                             </div>
                         </div>

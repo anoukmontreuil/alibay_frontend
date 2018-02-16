@@ -35,6 +35,7 @@ class App extends Component {
           userID: response, 
           displayLogin: false
         } } );
+
       }
     });
   }
@@ -95,7 +96,7 @@ class App extends Component {
                       logOut={this.checkForLogOut} />)
     } 
     // If state -> displayLogin is true: Login page is displayed.
-    if (this.state.displayLogin || this.state.userID !== null) {
+    if (this.state.displayLogin || this.state.userID === undefined ||  this.state.userID === null) {
       return (
         <div>
           <Login ref={lgnfrm => this.loginForm = lgnfrm}
@@ -246,7 +247,9 @@ class Alibay extends Component {
       return (
         <div className="FlexCenter">
           <div>
-            <Sidebar pageToDisplayInViewer={this.setPageToDisplayInViewer} logUserOut={this.handleLogOut}/>
+            <Sidebar 
+              pageToDisplayInViewer={this.setPageToDisplayInViewer} 
+              logUserOut={this.handleLogOut}/>
           </div>
           <div>
             <input ref={sb => this.searchBar = sb} className="Searchbar" placeholder="Find items for sale" />
