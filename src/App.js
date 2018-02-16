@@ -80,7 +80,7 @@ class App extends Component {
   }
 
   checkForLogOut = (logOutStatusFromSideBar) => {
-    console.log("LogOut Status From SideBar = ", logOutStatusFromSideBar);
+    // console.log("LogOut Status From SideBar = ", logOutStatusFromSideBar);
     this.setState(st => { return { 
       userID: null,
       displayLogin: true, 

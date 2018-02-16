@@ -53,7 +53,7 @@ class AddListing extends Component {
       }
 
     render = () => {
-        console.log('add listing props', this.props)
+        // console.log('add listing props', this.props)
         return (
             <div className="ModalBackground">
                 <div className="ModalWindow">
