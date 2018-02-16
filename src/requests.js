@@ -112,17 +112,6 @@ export function checkForExistingSession() {
     .then(x => x.json())
 }
 
-<<<<<<< HEAD
-// export function uploadFile(x) {
-//   var filename = x.name;
-//   var fileExtension = filename.split('.').pop();
-//   fetch('/upics?ext=' + fileExtension, {
-//     method: "POST",
-//     body: x
-//   })
-//   .then(x => console.log(x))
-// }
-=======
 export function uploadFile(file) {
   console.log("From requests.js:", file);
   const filename = file.name;
@@ -132,7 +121,6 @@ export function uploadFile(file) {
       body: file
   })
 }
->>>>>>> bc3a619721e5bb7a6dca0b84eed762c708cea267
 
 export function getUsername(uid) {
   return fetch('/getUsername?uid=' + uid)
