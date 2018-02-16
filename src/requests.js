@@ -31,6 +31,15 @@ export function login(username, password) {
     // .then(x => { console.log(x); return x })
 };
 
+export function logOff() {
+  return fetch('/logout', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+  }).then(x => x.json())
+  .then(y => console.log("Logging Out... ", y));
+}
+
 export function getItemsBoughtListings(uid) {
   // console.log('getItemsBoughtListings', uid)
   return fetch('/allItemsBought?uid=' + uid)
@@ -103,6 +112,7 @@ export function checkForExistingSession() {
     .then(x => x.json())
 }
 
+<<<<<<< HEAD
 // export function uploadFile(x) {
 //   var filename = x.name;
 //   var fileExtension = filename.split('.').pop();
@@ -112,6 +122,17 @@ export function checkForExistingSession() {
 //   })
 //   .then(x => console.log(x))
 // }
+=======
+export function uploadFile(file) {
+  console.log("From requests.js:", file);
+  const filename = file.name;
+  const fileExtension = filename.split('.').pop(); // Splits on all dots, but returns (pop) the extension (last piece)
+  return fetch('/uploadedPictures?ext=' + fileExtension, {
+      method: "POST",
+      body: file
+  })
+}
+>>>>>>> bc3a619721e5bb7a6dca0b84eed762c708cea267
 
 export function getUsername(uid) {
   return fetch('/getUsername?uid=' + uid)

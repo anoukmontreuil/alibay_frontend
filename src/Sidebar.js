@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { logOff } from './requests';
 
 class Sidebar extends Component {
   constructor(props) {
@@ -6,6 +7,7 @@ class Sidebar extends Component {
   }
 
   logOut = () => {
+    logOff();
     this.props.logUserOut(true);
   }
 

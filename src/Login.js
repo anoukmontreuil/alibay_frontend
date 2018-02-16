@@ -61,9 +61,10 @@ class Login extends Component {
       </h3>`;
       login(this.usernameField.value, sha1(this.passwordField.value))
       .then(y => { 
+        console.log("User Tested On Logon = ", y);
         this.setState( st => { return { userID: y }});
         this.props.loggedInUser(y);
-        if (y === "\"Login Failed\"" || y === "\"fail\"") {
+        if (y === "Login Failed" || y === "fail") {
           this.clearNotificationArea();
           this.notificationArea.innerHTML = `
           <h3 class="ErrorHeader">Error</h3>

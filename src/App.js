@@ -31,7 +31,6 @@ class App extends Component {
     checkForExistingSession()
     .then(response => { 
       if (response !== "no cookies") {
-        // 'substring' below only strips out the double quotes wrapping a valid userID.
         this.setState( st => { return { 
           userID: response, 
           displayLogin: false
@@ -58,8 +57,8 @@ class App extends Component {
   }
 
   getUserID = userIDFromChild => {
-    if (userIDFromChild !== "\"Login Failed\""
-      && userIDFromChild !== "\"fail\"") {
+    if (userIDFromChild !== "Login Failed"
+      && userIDFromChild !== "fail") {
       this.setState(st => {
         return {
           userID: userIDFromChild,
@@ -146,8 +145,6 @@ class Alibay extends Component {
     });
   };
 
-
-
   setAllListings = () => {
     getAllListings(this.props.userID)
       .then(async listingIDs => {
@@ -211,8 +208,6 @@ class Alibay extends Component {
   setAddListing = () => {
     this.setState({ pageToDisplayInViewer: 'addListing' })
   }
-
-
 
   componentDidMount() {
     this.setAllListings();

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getCreateListings } from './requests';
+import { getCreateListings, uploadFile } from './requests';
 
 class AddListing extends Component {
 
@@ -40,16 +40,12 @@ class AddListing extends Component {
     }
 
     uploadImg = img => {
-        try {
-            const filename = img.name;
-            const fileExtension = filename.split('.').pop(); // Splits on all dots, but returns (pop) the extension (last piece)
-            fetch('/uploadedPictures?ext=' + fileExtension, {
-                method: "POST",
-                body: img
-            })
-            .then(x => x.text())
-            .then(y => this.setState( st => { return { uploadedPicturePath: y } } ) );
-        } catch(err) {}
+        console.log(img);
+        uploadFile(img)
+        .then(x => x.json())
+        .then(y => {
+            this.setState( st => { return { uploadedPicturePath: y } } ); 
+        } );
       }
 
     render = () => {
