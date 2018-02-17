@@ -30,7 +30,7 @@ class ItemCard extends Component {
         <div className="FlexTopLeft">
           <div className="CardBody">
             <div className="CardPrice">
-              <img src={this.props.image} />
+              <img className="CardImage" src={this.props.image} />
             </div>
             <div className="FlexCenterLeft">
               {this.state.itemHasBeenPurchased || this.props.userID === this.props.seller || this.props.appState === "itemsBought" ?
@@ -58,7 +58,7 @@ class ItemCard extends Component {
         <div className="FlexTopLeft">
           <div className="CardBody">
             <div className="CardPrice">
-              <img src={this.props.image} />
+              <img className="CardImage" src={this.props.image} />
             </div>
             <div className="FlexCenterLeft">
               <button onClick={this.removeItem}>Remove item</button>
