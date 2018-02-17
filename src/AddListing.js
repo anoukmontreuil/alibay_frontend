@@ -8,7 +8,7 @@ class AddListing extends Component {
         this.state = {
             postingValidated: false,
             pictureSelected: false,
-            uploadedPicturePath: null,
+            uploadedPicturePath: null
         }
     }
 
@@ -27,18 +27,9 @@ class AddListing extends Component {
         }
     }
 
-    returnToAlibay = () => {
-        this.props.returnToAlibay(true);
-    }
-
     createListings = () => {
         // console.log(this.props.userID)
-        getCreateListings(
-            this.props.userID, 
-            this.itemPrice.value, 
-            this.itemBlurb.value, 
-            this.state.uploadedPicturePath, 
-            this.itemDescription.value)
+        getCreateListings(this.props.userID, this.itemPrice.value, this.itemBlurb.value, this.state.uploadedPicturePath, this.itemDescription.value)
             .then(response => {
                 this.props.setListings(this.props.allListings.concat({ 
                     seller: this.props.userID, 
@@ -48,7 +39,6 @@ class AddListing extends Component {
                     description: this.itemDescription.value
                  }))
             })
-        this.returnToAlibay();
     }
 
     uploadImg = img => {
@@ -66,59 +56,28 @@ class AddListing extends Component {
                 <div className="ModalWindow">
                     <div className="ModalTitleBar FlexCenterLeft">
                         <div className="AlignLeft FullWidth">Add A Listing</div>
-                        <div className="AlignRight FullWidth">
-                            <button onClick={this.props.handler}>
-                                <span className="ModalCloseButton">r</span>
-                            </button>
-                        </div>
+                        <div className="AlignRight FullWidth"><button onClick={this.props.handler}> <span className="ModalCloseButton">r</span> </button></div>
                     </div>
                     <div className="ModalBody">
                         <div className="FlexTopLeft">
                             <div className="BlockCenter">
                                 <div className="SubHeader">Picture Preview</div>
-                                <div>{
-                                    this.state.uploadedPicturePath !== null 
-                                    ? <div>
-                                        <img 
-                                        className="SelectedPicturePreview" 
-                                        src={this.state.uploadedPicturePath} 
-                                        alt="Selected Picture"/></div>
-                                    : <div className="PicturePlaceholder">
-                                </div> }</div>
+                                <div>{this.state.uploadedPicturePath !== null ? <div><img className="SelectedPicturePreview" src={this.state.uploadedPicturePath} alt="Selected Picture"/></div> : <div className="PicturePlaceholder"></div> }</div>
                             </div>
                             <div>
                                 <div className="BlockTopLeft">
-                                    <input 
-                                    type="file"
-                                    accept="image/*" 
-                                    onChange={e => this.uploadImg(e.target.files[0])} /> 
+                                    <input type="file" accept="image/*" onChange={e => this.uploadImg(e.target.files[0])} /> 
                                 </div>
                                 <div className="BlockTopLeft">
-                                    <input 
-                                        ref={it => this.itemBlurb = it} 
-                                        onChange={this.validatePosting} 
-                                        placeholder="Name of item" 
-                                        maxLength="140" 
-                                        className="NameField" />
-                                    <input 
-                                    ref={ip => this.itemPrice = ip} 
-                                    onChange={this.validatePosting} 
-                                    placeholder="Price" 
-                                    maxLength="10" 
-                                    className="PriceField" />
+                                    <input ref={it => this.itemBlurb = it} onChange={this.validatePosting} placeholder="Name of item" maxLength="140" className="NameField" />
+                                    <input ref={ip => this.itemPrice = ip} onChange={this.validatePosting} placeholder="Price" maxLength="10" className="PriceField" />
                                 </div>
                                 <div className="BlockTopLeft">
-                                    <textarea ref={ib => this.itemDescription = ib} 
-                                    placeholder="Item description" 
-                                    rows="5" cols="51" 
-                                    maxLength="4096" />
+                                    <textarea ref={ib => this.itemDescription = ib} placeholder="Item description" rows="5" cols="51" maxLength="4096" />
                                 </div>
                                 <div>
-                                    <button 
-                                        className="AddListingButton" 
-                                        onClick={this.createListings}>Add Listing</button>
-                                    <button className="ModalCancelButton" 
-                                        onClick={this.props.handler}>Cancel</button>
+                                    <button className="AddListingButton" onClick={this.createListings}>Add Listing</button>
+                                    <button className="ModalCancelButton" onClick={this.props.handler}>Cancel</button>
                                 </div>
                             </div>
                         </div>
